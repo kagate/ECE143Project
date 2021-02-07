@@ -19,45 +19,40 @@ with open('C:/Users/felyl/Documents/ECE143/ProjectData/IMDB-Movie-Data.csv', enc
     IMDBDataReader = csv.reader(IMDBDataFile)
     IMDBData = list(IMDBDataReader)
 
+# Adjust age ratings data so that if there is no age rating entry, it is replaced with "not rated"
+AdjustedMovieData = [['not rated' if all([not AgeRating, i == 4]) else AgeRating for i, AgeRating in enumerate(MovieEntry)] for MovieEntry in MovieData[1:]]
+
 # Extract and plot data on age ratings
 # ----------------------------------------------------------------------------------------------------------------------------------
-NetflixAgeRatingsTemp = [row[4] for row in MovieData[1:] if int(row[7]) == 1]
-HuluAgeRatingsTemp = [row[4] for row in MovieData[1:] if int(row[8]) == 1]
-PrimeAgeRatingsTemp = [row[4] for row in MovieData[1:] if int(row[9]) == 1]
-DisneyAgeRatingsTemp = [row[4] for row in MovieData[1:] if int(row[10]) == 1]
+NetflixAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[7]) == 1]
+HuluAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[8]) == 1]
+PrimeAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[9]) == 1]
+DisneyAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[10]) == 1]
 
 # Make pie chart of movie age ratings, consider empty data entries as unrated films
 # Netflix plot
 NetflixAgesDict = Counter(NetflixAgeRatingsTemp)
-NetflixAgesDict['not rated'] = NetflixAgesDict['']
-del NetflixAgesDict['']
 movie_plots.movie_pie_charts(NetflixAgesDict, "Netflix Movie Age Ratings", "NetflixAgeRatingsChart.png")
 
 # Hulu Plot
 HuluAgesDict = Counter(HuluAgeRatingsTemp)
-HuluAgesDict['not rated'] = HuluAgesDict['']
-del HuluAgesDict['']
 movie_plots.movie_pie_charts(HuluAgesDict, "Hulu Movie Age Ratings", "HuluAgeRatingsChart.png")
 
 # Prime Plot
 PrimeAgesDict = Counter(PrimeAgeRatingsTemp)
-PrimeAgesDict['not rated'] = PrimeAgesDict['']
-del PrimeAgesDict['']
 movie_plots.movie_pie_charts(PrimeAgesDict, "Prime Movie Age Ratings", "PrimeAgeRatingsChart.png")
 
 # Disney Plot
 DisneyAgesDict = Counter(DisneyAgeRatingsTemp)
-DisneyAgesDict['not rated'] = DisneyAgesDict['']
-del DisneyAgesDict['']
 movie_plots.movie_pie_charts(DisneyAgesDict, "Disney Movie Age Ratings", "DisneyAgeRatingsChart.png")
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Extract and plot genre data
 # ----------------------------------------------------------------------------------------------------------------------------------
-NetflixGenresTemp = [row[13].split(',') for row in MovieData[1:] if int(row[7]) == 1]
-HuluGenresTemp = [row[13].split(',') for row in MovieData[1:] if int(row[8]) == 1]
-PrimeGenresTemp = [row[13].split(',') for row in MovieData[1:] if int(row[9]) == 1]
-DisneyGenresTemp = [row[13].split(',') for row in MovieData[1:] if int(row[10]) == 1]
+NetflixGenresTemp = [row[13].split(',') for row in AdjustedMovieData if int(row[7]) == 1]
+HuluGenresTemp = [row[13].split(',') for row in AdjustedMovieData if int(row[8]) == 1]
+PrimeGenresTemp = [row[13].split(',') for row in AdjustedMovieData if int(row[9]) == 1]
+DisneyGenresTemp = [row[13].split(',') for row in AdjustedMovieData if int(row[10]) == 1]
 
 # Flattens the nested lists, so that usage of Counter is possible
 NetflixGenres = sum(NetflixGenresTemp, [])
@@ -93,17 +88,16 @@ movie_plots.movie_pie_charts(DisneyGenresDict, "Disney Movies Genres", "DisneyMo
 
 # Extract and plot IMDB ratings
 # ----------------------------------------------------------------------------------------------------------------------------------
-
-NetflixIMDBScores = [float(row[5]) for row in MovieData[1:] if int(row[7]) == 1 if row[5]]
-HuluIMDBScores = [float(row[5]) for row in MovieData[1:] if int(row[8]) == 1 if row[5]]
-PrimeIMDBScores = [float(row[5]) for row in MovieData[1:] if int(row[9]) == 1 if row[5]]
-DisneyIMDBScores = [float(row[5]) for row in MovieData[1:] if int(row[10]) == 1 if row[5]]
+NetflixIMDBScores = [float(row[5]) for row in AdjustedMovieData if int(row[7]) == 1 if row[5]]
+HuluIMDBScores = [float(row[5]) for row in AdjustedMovieData if int(row[8]) == 1 if row[5]]
+PrimeIMDBScores = [float(row[5]) for row in AdjustedMovieData if int(row[9]) == 1 if row[5]]
+DisneyIMDBScores = [float(row[5]) for row in AdjustedMovieData if int(row[10]) == 1 if row[5]]
 
 # Make new age lists which don't include data points that don't have an IMDB score
-NetflixIMDBAges = [row[4] for row in MovieData[1:] if int(row[7]) == 1 if row[5]]
-HuluIMDBAges = [row[4] for row in MovieData[1:] if int(row[8]) == 1 if row[5]]
-PrimeIMDBAges = [row[4] for row in MovieData[1:] if int(row[9]) == 1 if row[5]]
-DisneyIMDBAges = [row[4] for row in MovieData[1:] if int(row[10]) == 1 if row[5]]
+NetflixIMDBAges = [row[4] for row in AdjustedMovieData if int(row[7]) == 1 if row[5]]
+HuluIMDBAges = [row[4] for row in AdjustedMovieData if int(row[8]) == 1 if row[5]]
+PrimeIMDBAges = [row[4] for row in AdjustedMovieData if int(row[9]) == 1 if row[5]]
+DisneyIMDBAges = [row[4] for row in AdjustedMovieData if int(row[10]) == 1 if row[5]]
 
 IMDBScores = [NetflixIMDBScores, HuluIMDBScores, PrimeIMDBScores, DisneyIMDBScores]
 IMDBAges = [NetflixIMDBAges, HuluIMDBAges, PrimeIMDBAges, DisneyIMDBAges]
@@ -113,21 +107,21 @@ movie_plots.movie_scatter_plots(IMDBScores, "IMDB Scores", 'IMDBScoresScatterPlo
 
 # Extract and plot Rotten Tomato ratings
 # ----------------------------------------------------------------------------------------------------------------------------------
-NetflixRTScores = [float(row[6].replace('%', '')) for row in MovieData[1:] if int(row[7]) == 1 if row[6]]
-HuluRTScores = [float(row[6].replace('%', '')) for row in MovieData[1:] if int(row[8]) == 1 if row[6]]
-PrimeRTScores = [float(row[6].replace('%', '')) for row in MovieData[1:] if int(row[9]) == 1 if row[6]]
-DisneyRTScores = [float(row[6].replace('%', '')) for row in MovieData[1:] if int(row[10]) == 1 if row[6]]
+NetflixRTScores = [float(row[6].replace('%', '')) for row in AdjustedMovieData if int(row[7]) == 1 if row[6]]
+HuluRTScores = [float(row[6].replace('%', '')) for row in AdjustedMovieData if int(row[8]) == 1 if row[6]]
+PrimeRTScores = [float(row[6].replace('%', '')) for row in AdjustedMovieData if int(row[9]) == 1 if row[6]]
+DisneyRTScores = [float(row[6].replace('%', '')) for row in AdjustedMovieData if int(row[10]) == 1 if row[6]]
 
 # Make new age lists which don't include data points that don't have an IMDB score
-NetflixIMDBAges = [row[4] for row in MovieData[1:] if int(row[7]) == 1 if row[6]]
-HuluIMDBAges = [row[4] for row in MovieData[1:] if int(row[8]) == 1 if row[6]]
-PrimeIMDBAges = [row[4] for row in MovieData[1:] if int(row[9]) == 1 if row[6]]
-DisneyIMDBAges = [row[4] for row in MovieData[1:] if int(row[10]) == 1 if row[6]]
+NetflixRTAges = [row[4] for row in AdjustedMovieData if int(row[7]) == 1 if row[6]]
+HuluRTAges = [row[4] for row in AdjustedMovieData if int(row[8]) == 1 if row[6]]
+PrimeRTAges = [row[4] for row in AdjustedMovieData if int(row[9]) == 1 if row[6]]
+DisneyRTAges = [row[4] for row in AdjustedMovieData if int(row[10]) == 1 if row[6]]
 
 RTScores = [NetflixRTScores, HuluRTScores, PrimeRTScores, DisneyRTScores]
-Ages = [NetflixIMDBAges, HuluIMDBAges, PrimeIMDBAges, DisneyIMDBAges]
+RTAges = [NetflixRTAges, HuluRTAges, PrimeRTAges, DisneyRTAges]
 
-movie_plots.movie_scatter_plots(RTScores, "Rotten Tomato Scores", 'RottenTomatoScoresScatterPlot.png', Ages, "Ages")
+movie_plots.movie_scatter_plots(RTScores, "Rotten Tomato Scores", 'RottenTomatoScoresScatterPlot.png', RTAges, "Ages")
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Make plot showing which streaming platforms have the 1000 most popular movies (according to IMDB)
@@ -139,10 +133,10 @@ movie_plots.movie_scatter_plots(RTScores, "Rotten Tomato Scores", 'RottenTomatoS
 # Only plot first 30 most popular movies for now (for plot spacing reasons)
 MostPopMovies = [row[1] for row in IMDBData[1:31]]
 
-NetflixMovies = [row[2] for row in MovieData[1:] if int(row[7]) == 1]
-PrimeMovies = [row[2] for row in MovieData[1:] if int(row[8]) == 1]
-HuluMovies = [row[2] for row in MovieData[1:] if int(row[9]) == 1]
-DisneyMovies = [row[2] for row in MovieData[1:] if int(row[10]) == 1]
+NetflixMovies = [row[2] for row in AdjustedMovieData if int(row[7]) == 1]
+PrimeMovies = [row[2] for row in AdjustedMovieData if int(row[8]) == 1]
+HuluMovies = [row[2] for row in AdjustedMovieData if int(row[9]) == 1]
+DisneyMovies = [row[2] for row in AdjustedMovieData if int(row[10]) == 1]
 
 NetflixPopMovies = [1.0 if movie in NetflixMovies else 0.0 for movie in MostPopMovies]
 PrimePopMovies = [1.0 if movie in PrimeMovies else 0.0 for movie in MostPopMovies]
