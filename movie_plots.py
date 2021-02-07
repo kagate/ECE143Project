@@ -28,7 +28,32 @@ def movie_pie_charts(DataDict, Title, Filename, ExplodeList=[]):
     plt.title(Title, fontsize=18)
     pie.savefig(Filename)
 
-# def movies_bar_charts(Filename)
+def movies_bar_charts(StreamingPlatform, Data1, Data1Name, Filename):
+    '''
+    This function makes a bar graph with x-values=StreamingPlatform and y-values=Data1
+    :param StreamingPlatform: list of streaming platforms
+    :param Data1: List containing data on one attribute of each streaming platform
+    :param Data1Name: Name of attribute in Data1 (e.g. "Popular Movie Count")
+    :param Filename: Filename of saved bar chart 
+    :type StreamingPlatform: list of strings
+    :type Data1: list 
+    :type Data1Name: string
+    :type Filename: string
+    '''
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    assert isinstance(StreamingPlatform, list), "StreamingPlatform must be a list"
+    assert isinstance(Data1, list), "Data1 must be a list"
+    assert isinstance(Filename, str), "Filename must be a string"
+    assert isinstance(Data1Name, str), "Data1Name must be a string"
+
+    plt.figure()
+    FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1})
+    BarChartFig = sns.barplot(x="Streaming Platform", y=Data1Name, data=FinalDataStruct, palette="Blues_d")
+    plt.savefig(Filename)
+
 
 def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
     '''

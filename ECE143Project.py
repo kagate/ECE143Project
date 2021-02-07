@@ -131,7 +131,8 @@ movie_plots.movie_scatter_plots(RTScores, "Rotten Tomato Scores", 'RottenTomatoS
 # has the movie or filled in with a different color if the streaming platform does not have the movie.
 
 # Only plot first 30 most popular movies for now (for plot spacing reasons)
-MostPopMovies = [row[1] for row in IMDBData[1:31]]
+MaxEntry = 30
+MostPopMovies = [row[1] for row in IMDBData[1:]]
 
 NetflixMovies = [row[2] for row in AdjustedMovieData if int(row[7]) == 1]
 PrimeMovies = [row[2] for row in AdjustedMovieData if int(row[8]) == 1]
@@ -143,11 +144,26 @@ PrimePopMovies = [1.0 if movie in PrimeMovies else 0.0 for movie in MostPopMovie
 HuluPopMovies = [1.0 if movie in HuluMovies else 0.0 for movie in MostPopMovies]
 DisneyPopMovies = [1.0 if movie in DisneyMovies else 0.0 for movie in MostPopMovies]
 
-TempList = [NetflixPopMovies, PrimePopMovies, HuluPopMovies, DisneyPopMovies]
+TempList = [NetflixPopMovies[0:MaxEntry], PrimePopMovies[0:MaxEntry], HuluPopMovies[0:MaxEntry], DisneyPopMovies[0:MaxEntry]]
 PopMoviesArray = np.asarray(TempList, dtype=np.float32)
 
 StreamingPlatformsList = ["Netflix", "Prime", "Hulu", "Disney+"]
-movie_plots.heatmap_plots(np.transpose(PopMoviesArray), MostPopMovies, StreamingPlatformsList, "PopularMoviesHeatmap.png")
+movie_plots.heatmap_plots(np.transpose(PopMoviesArray), MostPopMovies[0:MaxEntry], StreamingPlatformsList, "PopularMoviesHeatmap.png")
+
+# ----------------------------------------------------------------------------------------------------------------------------------
+
+# Bar graph of # of popular movies each streaming platform has
+# ----------------------------------------------------------------------------------------------------------------------------------
+NetflixPopMoviesCount = sum(NetflixPopMovies)
+HuluPopMoviesCount = sum(HuluPopMovies)
+PrimePopMoviesCount = sum(PrimePopMovies)
+DisneyPopMoviesCount = sum(DisneyPopMovies)
+
+PopMoviesCount = [NetflixPopMoviesCount, HuluPopMoviesCount, PrimePopMoviesCount, DisneyPopMoviesCount]
+Data1Name = "Popular Movies Count"
+Filename="BarChartPopMoviesCount.png"
+
+movie_plots.movies_bar_charts(StreamingPlatformsList, PopMoviesCount, Data1Name, Filename)
 
 
 
