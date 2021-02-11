@@ -1,0 +1,53 @@
+Notes from Zoom Meeting:
+
+
+Currently we have:
+- Popular movies count by platform
+- Percent of movies by age rating by platform
+- Percent of movies by genre by platform
+- IMDB and Rotten Tomatoes scores vs. ages vs. platform
+- Heatmap of popular movies across platforms
+
+
+General Comments:
+- Create more of a side by side comparison for some of the plots
+- Some of the plots enlarge the font
+- Might want to consider changing the scatter plots into multi-bar plots
+- Add TV shows? Do we want to do same plots?
+- Other features: run time (length of movie), year made, country
+    - TV shows and movies might have different features
+- Recommender system for platform to use
+    - Can return multiple recommendations based off of different metrics? (eg. quantity vs quality)
+
+
+Other analyses:
+- Dimensionality reduction on genres --> make this one scalar axis?
+    - Sample some of the extremes and see what these are to get a feel for the latent variable
+    - See where the platforms' distributions of movies fall on this scale
+
+
+"*MovieGenres.png" :
+- Can stagger the smaller categories so that the text doesn't look overlapped
+
+
+"PopularMoviesHeatmap.png":
+- Some movies that are on here aren't on any of the platforms -- do we still want to include?
+- Maybe be more organized along y-axis in terms of groupings of movies?
+
+
+To-do:
+    Shivani:
+        Similar plots, other features
+    Jake:
+        Dimensionality reduction
+    Jinyu:
+        Recommender System
+    Laura:
+        TV Shows
+    Katrina:
+        Edits to current plots (font bigger, fix overlapping font, scatter -> multi-line bar)
+        Putting side by side
+
+Next meeting:
+
+    Monday Feb 22 8pm: Test Cases + Project Updates
