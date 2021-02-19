@@ -29,22 +29,25 @@ HuluAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[8]) == 1]
 PrimeAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[9]) == 1]
 DisneyAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[10]) == 1]
 
+
 # Make pie chart of movie age ratings, consider empty data entries as unrated films
 # Netflix plot
 NetflixAgesDict = Counter(NetflixAgeRatingsTemp)
-movie_plots.movie_pie_charts(NetflixAgesDict, "Netflix Movie Age Ratings", "NetflixAgeRatingsChart.png")
+# movie_plots.movie_pie_charts(NetflixAgesDict, "Netflix Movie Age Ratings", "NetflixAgeRatingsChart.png")
 
 # Hulu Plot
 HuluAgesDict = Counter(HuluAgeRatingsTemp)
-movie_plots.movie_pie_charts(HuluAgesDict, "Hulu Movie Age Ratings", "HuluAgeRatingsChart.png")
+# movie_plots.movie_pie_charts(HuluAgesDict, "Hulu Movie Age Ratings", "HuluAgeRatingsChart.png")
 
 # Prime Plot
 PrimeAgesDict = Counter(PrimeAgeRatingsTemp)
-movie_plots.movie_pie_charts(PrimeAgesDict, "Prime Movie Age Ratings", "PrimeAgeRatingsChart.png")
+# movie_plots.movie_pie_charts(PrimeAgesDict, "Prime Movie Age Ratings", "PrimeAgeRatingsChart.png")
 
 # Disney Plot
 DisneyAgesDict = Counter(DisneyAgeRatingsTemp)
-movie_plots.movie_pie_charts(DisneyAgesDict, "Disney Movie Age Ratings", "DisneyAgeRatingsChart.png")
+# movie_plots.movie_pie_charts(DisneyAgesDict, "Disney Movie Age Ratings", "DisneyAgeRatingsChart.png")
+
+movie_plots.movie_pie_charts(NetflixAgesDict, HuluAgesDict, PrimeAgesDict, DisneyAgesDict, "Streaming Platform Age Ratings", "PlatformAgeRatings.png", ExplodeList=[])
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Extract and plot genre data

@@ -1,4 +1,4 @@
-def movie_pie_charts(DataDict, Title, Filename, ExplodeList=[]):
+def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filename, ExplodeList=[]):
     '''
     This function outputs a pie chart of the input DataDict and saves the figure under Filename
     :param DataDict: Dictionary of number of instances of each possible data value (e.g. {'Action Movies': 22, 'Comedy Movies': 43})
@@ -10,7 +10,10 @@ def movie_pie_charts(DataDict, Title, Filename, ExplodeList=[]):
     :type Filename: string
     :type ExplodeList: list
     '''
-    assert isinstance(DataDict, dict), "Input data must be a dictionary"
+    assert isinstance(NetflixDict, dict), "Netflix data must be a dictionary"
+    assert isinstance(HuluDict, dict), "Hulu data must be a dictionary"
+    assert isinstance(PrimeDict, dict), "Prime data must be a dictionary"
+    assert isinstance(DisneyDict, dict), "Disney data must be a dictionary"
     assert isinstance(Title, str), "Title must be a string"
     assert isinstance(Filename, str), "Filename must be a string"
     assert isinstance(ExplodeList, list), "ExplodeList must be a list"
@@ -18,15 +21,33 @@ def movie_pie_charts(DataDict, Title, Filename, ExplodeList=[]):
     import matplotlib.pyplot as plt
     
 
-    pie, _ = plt.subplots(figsize=[12,10])
-    labels = DataDict.keys()
-    if not ExplodeList:    
-        plt.pie(x=DataDict.values(), autopct="%.1f%%", labels=labels, pctdistance=0.8) 
-    else:
-        plt.pie(x=DataDict.values(), explode=ExplodeList, autopct="%.1f%%", labels=labels, pctdistance=0.8)
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+    # NetflixLabels = NetflixDict.keys()
+    # HuluLabels = HuluDict.keys()
+    # PrimeLabels = PrimeDict.keys()
+    # DisneyLabels = DisneyDict.keys()
+    # Netflix subplot 
+    ax1.pie([float(Vals) for Vals in NetflixDict.values()], autopct="%.1f%%", labels=[NetLabels for NetLabels in NetflixDict], pctdistance=0.8)
+    ax1.set_title('Netflix Plot')
+    # Hulu subplot 
+    ax2.pie([float(Vals) for Vals in HuluDict.values()], autopct="%.1f%%", labels=[HuluLabels for HuluLabels in HuluDict], pctdistance=0.8)
+    # ax2.pie(x=HuluDict.values(), autopct="%.1f%%", labels=HuluLabels, pctdistance=0.8)
+    ax2.set_title('Hulu Plot')
+    # Prime subplot 
+    ax3.pie([float(Vals) for Vals in PrimeDict.values()], autopct="%.1f%%", labels=[PrimeLabels for PrimeLabels in PrimeDict], pctdistance=0.8)
+    # ax3.pie(x=PrimeDict.values(), autopct="%.1f%%", labels=PrimeLabels, pctdistance=0.8)
+    ax3.set_title('Prime Plot')
+    # Disney subplot 
+    ax4.pie([float(Vals) for Vals in DisneyDict.values()], autopct="%.1f%%", labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=0.8)
+    # ax4.pie(x=DisneyDict.values(), autopct="%.1f%%", labels=DisneyLabels, pctdistance=0.8)
+    ax4.set_title('Disney Plot')
+    # if not ExplodeList:    
+    #     plt.pie(x=DataDict.values(), autopct="%.1f%%", labels=labels, pctdistance=0.8) 
+    # else:
+    #     plt.pie(x=DataDict.values(), explode=ExplodeList, autopct="%.1f%%", labels=labels, pctdistance=0.8)
     plt.set_cmap('PuBuGn')
-    plt.title(Title, fontsize=18)
-    pie.savefig(Filename)
+    # plt.title(Title, fontsize=18)
+    fig.savefig(Filename)
 
 def movies_bar_charts(StreamingPlatform, Data1, Data1Name, Filename):
     '''
@@ -51,7 +72,7 @@ def movies_bar_charts(StreamingPlatform, Data1, Data1Name, Filename):
 
     plt.figure()
     FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1})
-    BarChartFig = sns.barplot(x="Streaming Platform", y=Data1Name, data=FinalDataStruct, palette="Blues_d")
+    BarChartFig = sns.barplot(x="Streaming Platform", y=Data1Name, data=FinalDataStruct, palette="Blues_d", alpha=.5)
     plt.savefig(Filename)
 
 
@@ -83,6 +104,7 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
 
     import pandas as pd
     import seaborn as sns
+    import matplotlib.pyplot as plt
 
     StreamingPlatform = ["Netflix"]*len(Data1[0]) + ["Hulu"]*len(Data1[1]) + ["Prime"]*len(Data1[2]) + ["Disney+"]*len(Data1[3])
     Data1List = sum(Data1, [])
@@ -96,7 +118,7 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
     else:
         FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1List})
 
-    IMDBScatter = sns.catplot(x="Streaming Platform", y=Data1Name, hue=Data2Name, data=FinalDataStruct)
+    IMDBScatter = sns.catplot(x="Streaming Platform", y=Data1Name, hue=Data2Name, data=FinalDataStruct, palette="mako", alpha=.5)
     IMDBScatter.savefig(Filename)
 
 def heatmap_plots(data, row_labels, col_labels, Filename):
