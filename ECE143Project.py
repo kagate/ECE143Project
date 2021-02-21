@@ -8,14 +8,14 @@ from collections import Counter
 import platform_plots
 
 # load MoviesOnStreamingPlatforms csv and IMDBMovieData csv
-MoviesData = []
+MovieData = []
 with open('/Users/laurabecerra/code/finalproject/ECE143Project/MoviesOnStreamingPlatforms_updated.csv', encoding="utf8") as MoviesCSVFile:
     MoviesCSVReader = csv.reader(MoviesCSVFile)
     MovieData = list(MoviesCSVReader)
     NumMovies = len(MovieData)
 
 TVshowData = []
-with open('/Users/laurabecerra/code/finalproject/ECE143Project/tv_shows.csv', encoding="utf8") as TVshowsCSVFile:
+with open('/Users/laurabecerra/code/finalproject/ECE143Project/tv_shows_with_genres.csv', encoding="utf8") as TVshowsCSVFile:
     TVshowsCSVReader = csv.reader(TVshowsCSVFile)
     TVshowData = list(TVshowsCSVReader)
     NumTVshows = len(TVshowData)
@@ -27,7 +27,8 @@ with open('/Users/laurabecerra/code/finalproject/ECE143Project/IMDB-Movie-Data.c
 
 # Adjust age ratings data so that if there is no age rating entry, it is replaced with "not rated"
 AdjustedMovieData = [['not rated' if all([not AgeRating, i == 4]) else AgeRating for i, AgeRating in enumerate(MovieEntry)] for MovieEntry in MovieData[1:]]
-AdjustedTVshowData = [['not rated' if all([not AgeRating, i == 3]) else AgeRating for i, AgeRating in enumerate(TVshowEntry)] for TVshowEntry in TVshowData[1:]]
+AdjustedTVshowData_1 = [['not rated' if all([not AgeRating, i == 3]) else AgeRating for i, AgeRating in enumerate(TVshowEntry)] for TVshowEntry in TVshowData[1:]]
+AdjustedTVshowData = [['unknown' if all([not genre, i == 11]) else genre for i, genre in enumerate(TVshowEntry)] for TVshowEntry in AdjustedTVshowData_1[1:]]
 
 # Extract and plot data on age ratings
 # ----------------------------------------------------------------------------------------------------------------------------------
@@ -75,45 +76,78 @@ platform_plots.pie_charts(DisneyAgesDict, "Disney Movie Age Ratings", "DisneyAge
 # Disney Plot TV shows
 DisneyAgesTVshowDict = Counter(DisneyAgeRatingsTemp_TVshow)
 platform_plots.pie_charts(DisneyAgesTVshowDict, "Disney TV Show Age Ratings", "DisneyTVShowAgeRatingsChart.png")
+
 # ----------------------------------------------------------------------------------------------------------------------------------
 
-# Extract and plot movie genre data
+# Extract and plot genre data
 # ----------------------------------------------------------------------------------------------------------------------------------
-NetflixGenresTemp = [row[13].split(',') for row in AdjustedMovieData if int(row[7]) == 1]
-HuluGenresTemp = [row[13].split(',') for row in AdjustedMovieData if int(row[8]) == 1]
-PrimeGenresTemp = [row[13].split(',') for row in AdjustedMovieData if int(row[9]) == 1]
-DisneyGenresTemp = [row[13].split(',') for row in AdjustedMovieData if int(row[10]) == 1]
+# Movies
+NetflixGenresTemp_movie = [row[13].split(',') for row in AdjustedMovieData if int(row[7]) == 1]
+HuluGenresTemp_movie = [row[13].split(',') for row in AdjustedMovieData if int(row[8]) == 1]
+PrimeGenresTemp_movie = [row[13].split(',') for row in AdjustedMovieData if int(row[9]) == 1]
+DisneyGenresTemp_movie = [row[13].split(',') for row in AdjustedMovieData if int(row[10]) == 1]
+
+# TV Shows
+AdjustedTVshowDataGenres = [row for row in AdjustedTVshowData if len(row) == 12]
+NetflixGenresTemp_TVShow = [row[11].split(',') for row in AdjustedTVshowDataGenres if int(row[6]) == 1]
+HuluGenresTemp_TVShow = [row[11].split(',') for row in AdjustedTVshowDataGenres if int(row[7]) == 1]
+PrimeGenresTemp_TVShow = [row[11].split(',') for row in AdjustedTVshowDataGenres if int(row[8]) == 1]
+DisneyGenresTemp_TVShow = [row[11].split(',') for row in AdjustedTVshowDataGenres if int(row[9]) == 1]
 
 # Flattens the nested lists, so that usage of Counter is possible
-NetflixGenres = sum(NetflixGenresTemp, [])
-HuluGenres = sum(HuluGenresTemp, [])
-PrimeGenres = sum(PrimeGenresTemp, [])
-DisneyGenres = sum(DisneyGenresTemp, [])
+NetflixMovieGenres = sum(NetflixGenresTemp_movie, [])
+HuluMovieGenres = sum(HuluGenresTemp_movie, [])
+PrimeMovieGenres = sum(PrimeGenresTemp_movie, [])
+DisneyMovieGenres = sum(DisneyGenresTemp_movie, [])
+
+NetflixTVShowGenres = sum(NetflixGenresTemp_TVShow, [])
+HuluTVShowGenres = sum(HuluGenresTemp_TVShow, [])
+PrimeTVShowGenres = sum(PrimeGenresTemp_TVShow, [])
+DisneyTVShowGenres = sum(DisneyGenresTemp_TVShow, [])
 
 # Netflix Plot
-NetflixGenresDict = Counter(NetflixGenres)
-DictSize = len(NetflixGenresDict)
+NetflixMovieGenresDict = Counter(NetflixMovieGenres)
+DictSize = len(NetflixMovieGenresDict)
 ExplodeListNetflix = [0.1]*DictSize
-platform_plots.pie_charts(NetflixGenresDict, "Netflix Movies Genres", "NetflixMoviesGenres.png", ExplodeListNetflix)
+platform_plots.pie_charts(NetflixMovieGenresDict, "Netflix Movies Genres", "NetflixMoviesGenres.png", ExplodeListNetflix)
+
+NetflixTVShowGenresDict = Counter(NetflixTVShowGenres)
+DictSize = len(NetflixTVShowGenresDict)
+ExplodeListNetflix_TVShow = [0.1]*DictSize
+platform_plots.pie_charts(NetflixTVShowGenresDict, "Netflix TV Shows Genres", "NetflixTVShowsGenres.png", ExplodeListNetflix_TVShow)
 
 # Hulu Plot
-HuluGenresDict = Counter(HuluGenres)
-DictSize = len(HuluGenresDict)
+HuluMovieGenresDict = Counter(HuluMovieGenres)
+DictSize = len(HuluMovieGenresDict)
 ExplodeListHulu = [0.1]*DictSize
-platform_plots.pie_charts(HuluGenresDict, "Hulu Movies Genres", "HuluMoviesGenres.png", ExplodeListHulu)
+platform_plots.pie_charts(HuluMovieGenresDict, "Hulu Movies Genres", "HuluMoviesGenres.png", ExplodeListHulu)
+
+HuluTVShowGenresDict = Counter(HuluTVShowGenres)
+DictSize = len(HuluTVShowGenresDict)
+ExplodeListHulu_TVShow = [0.1]*DictSize
+platform_plots.pie_charts(HuluTVShowGenresDict, "Hulu TV Shows Genres", "HuluTVShowsGenres.png", ExplodeListHulu_TVShow)
 
 # Prime Plot
-PrimeGenresDict = Counter(PrimeGenres)
-DictSize = len(PrimeGenresDict)
+PrimeMovieGenresDict = Counter(PrimeMovieGenres)
+DictSize = len(PrimeMovieGenresDict)
 ExplodeListPrime = [0.1]*DictSize
-platform_plots.pie_charts(PrimeGenresDict, "Prime Movies Genres", "PrimeMoviesGenres.png", ExplodeListPrime)
+platform_plots.pie_charts(PrimeMovieGenresDict, "Prime Movies Genres", "PrimeMoviesGenres.png", ExplodeListPrime)
+
+PrimeTVShowGenresDict = Counter(PrimeTVShowGenres)
+DictSize = len(PrimeTVShowGenresDict)
+ExplodeListPrime_TVShow = [0.1]*DictSize
+platform_plots.pie_charts(PrimeTVShowGenresDict, "Prime TV Shows Genres", "PrimeTVShowsGenres.png", ExplodeListPrime_TVShow)
 
 # Disney Plot
-DisneyGenresDict = Counter(DisneyGenres)
-DictSize = len(DisneyGenresDict)
+DisneyMovieGenresDict = Counter(DisneyMovieGenres)
+DictSize = len(DisneyMovieGenresDict)
 ExplodeListDisney = [0.1]*DictSize
-platform_plots.pie_charts(DisneyGenresDict, "Disney Movies Genres", "DisneyMoviesGenres.png", ExplodeListDisney)
+platform_plots.pie_charts(DisneyMovieGenresDict, "Disney Movies Genres", "DisneyMoviesGenres.png", ExplodeListDisney)
 
+DisneyTVShowGenresDict = Counter(DisneyTVShowGenres)
+DictSize = len(DisneyTVShowGenresDict)
+ExplodeListDisney_TVShow = [0.1]*DictSize
+platform_plots.pie_charts(DisneyTVShowGenresDict, "Disney TV Shows Genres", "DisneyTVShowsGenres.png", ExplodeListDisney_TVShow)
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Extract and plot IMDB ratings
