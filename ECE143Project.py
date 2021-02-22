@@ -3,6 +3,7 @@
 import csv
 import numpy as np
 from collections import Counter
+from collections import OrderedDict
 
 # Other functions
 import movie_plots
@@ -47,7 +48,7 @@ PrimeAgesDict = Counter(PrimeAgeRatingsTemp)
 DisneyAgesDict = Counter(DisneyAgeRatingsTemp)
 # movie_plots.movie_pie_charts(DisneyAgesDict, "Disney Movie Age Ratings", "DisneyAgeRatingsChart.png")
 
-movie_plots.movie_pie_charts(NetflixAgesDict, HuluAgesDict, PrimeAgesDict, DisneyAgesDict, "Streaming Platform Age Ratings", "PlatformAgeRatings.png", ExplodeList=[])
+movie_plots.movie_pie_charts(NetflixAgesDict, HuluAgesDict, PrimeAgesDict, DisneyAgesDict, "Streaming Platform Age Ratings", "PlatformAgeRatings", 4, ExplodeList=[])
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Extract and plot genre data
@@ -64,28 +65,44 @@ PrimeGenres = sum(PrimeGenresTemp, [])
 DisneyGenres = sum(DisneyGenresTemp, [])
 
 # Netflix Plot
+Order = ['Action', 'Documentary', 'Adventure', 'Musical', 'Thriller', 'Sci-Fi', 'History', 'Sport', \
+     'Comedy', 'Short', 'Western', 'Family', 'Animation', 'War', 'Talk-Show', 'Drama', 'News', 'Crime', 'Music', 'Fantasy', \
+         'Film-Noir', 'Horror', 'Romance', 'Reality-TV']
 NetflixGenresDict = Counter(NetflixGenres)
-DictSize = len(NetflixGenresDict)
-ExplodeListNetflix = [0.1]*DictSize
-movie_plots.movie_pie_charts(NetflixGenresDict, "Netflix Movies Genres", "NetflixMoviesGenres.png", ExplodeListNetflix)
+# Order netflix dictionary 
+NetflixOrderedDict = OrderedDict()
+for genre in Order:
+    NetflixOrderedDict[genre] = NetflixGenresDict[genre]
+DictSize = len(NetflixOrderedDict)
+ExplodeListNetflix = [0.05]*DictSize
 
 # Hulu Plot
 HuluGenresDict = Counter(HuluGenres)
-DictSize = len(HuluGenresDict)
-ExplodeListHulu = [0.1]*DictSize
-movie_plots.movie_pie_charts(HuluGenresDict, "Hulu Movies Genres", "HuluMoviesGenres.png", ExplodeListHulu)
+HuluOrderedDict = OrderedDict()
+for genre in Order:
+    HuluOrderedDict[genre] = HuluGenresDict[genre]
+DictSize = len(HuluOrderedDict)
+ExplodeListHulu = [0.05]*DictSize
 
 # Prime Plot
 PrimeGenresDict = Counter(PrimeGenres)
-DictSize = len(PrimeGenresDict)
-ExplodeListPrime = [0.1]*DictSize
-movie_plots.movie_pie_charts(PrimeGenresDict, "Prime Movies Genres", "PrimeMoviesGenres.png", ExplodeListPrime)
+PrimeOrderedDict = OrderedDict()
+for genre in Order:
+    PrimeOrderedDict[genre] = PrimeGenresDict[genre]
+DictSize = len(PrimeOrderedDict)
+ExplodeListPrime = [0.05]*DictSize
 
 # Disney Plot
 DisneyGenresDict = Counter(DisneyGenres)
-DictSize = len(DisneyGenresDict)
-ExplodeListDisney = [0.1]*DictSize
-movie_plots.movie_pie_charts(DisneyGenresDict, "Disney Movies Genres", "DisneyMoviesGenres.png", ExplodeListDisney)
+DisneyOrderedDict = OrderedDict()
+# Make disney order.  Note it's different because disney+ contains a subset of the genres on the other three streaming platforms
+DisneyOrder = [genre for genre in Order if DisneyGenresDict.__contains__(genre)]
+for genre in DisneyOrder:
+    DisneyOrderedDict[genre] = DisneyGenresDict[genre]
+DictSize = len(DisneyOrderedDict)
+ExplodeListDisney = [0.05]*DictSize
+movie_plots.movie_pie_charts(NetflixOrderedDict, HuluOrderedDict, PrimeOrderedDict, DisneyOrderedDict, "Movies Genres", \
+    "MoviesGenresPieChart", 1, [ExplodeListNetflix, ExplodeListHulu, ExplodeListPrime, ExplodeListDisney])
 
 # ----------------------------------------------------------------------------------------------------------------------------------
 

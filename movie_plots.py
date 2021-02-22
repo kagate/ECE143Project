@@ -1,4 +1,4 @@
-def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filename, ExplodeList=[]):
+def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filename, NumSubplots, ExplodeList=[]):
     '''
     This function outputs a pie chart of the input DataDict and saves the figure under Filename
     :param DataDict: Dictionary of number of instances of each possible data value (e.g. {'Action Movies': 22, 'Comedy Movies': 43})
@@ -21,33 +21,71 @@ def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filena
     import matplotlib.pyplot as plt
     
 
-    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
-    # NetflixLabels = NetflixDict.keys()
-    # HuluLabels = HuluDict.keys()
-    # PrimeLabels = PrimeDict.keys()
-    # DisneyLabels = DisneyDict.keys()
-    # Netflix subplot 
-    ax1.pie([float(Vals) for Vals in NetflixDict.values()], autopct="%.1f%%", labels=[NetLabels for NetLabels in NetflixDict], pctdistance=0.8)
-    ax1.set_title('Netflix Plot')
-    # Hulu subplot 
-    ax2.pie([float(Vals) for Vals in HuluDict.values()], autopct="%.1f%%", labels=[HuluLabels for HuluLabels in HuluDict], pctdistance=0.8)
-    # ax2.pie(x=HuluDict.values(), autopct="%.1f%%", labels=HuluLabels, pctdistance=0.8)
-    ax2.set_title('Hulu Plot')
-    # Prime subplot 
-    ax3.pie([float(Vals) for Vals in PrimeDict.values()], autopct="%.1f%%", labels=[PrimeLabels for PrimeLabels in PrimeDict], pctdistance=0.8)
-    # ax3.pie(x=PrimeDict.values(), autopct="%.1f%%", labels=PrimeLabels, pctdistance=0.8)
-    ax3.set_title('Prime Plot')
-    # Disney subplot 
-    ax4.pie([float(Vals) for Vals in DisneyDict.values()], autopct="%.1f%%", labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=0.8)
-    # ax4.pie(x=DisneyDict.values(), autopct="%.1f%%", labels=DisneyLabels, pctdistance=0.8)
-    ax4.set_title('Disney Plot')
-    # if not ExplodeList:    
-    #     plt.pie(x=DataDict.values(), autopct="%.1f%%", labels=labels, pctdistance=0.8) 
-    # else:
-    #     plt.pie(x=DataDict.values(), explode=ExplodeList, autopct="%.1f%%", labels=labels, pctdistance=0.8)
-    plt.set_cmap('PuBuGn')
-    # plt.title(Title, fontsize=18)
-    fig.savefig(Filename)
+    if NumSubplots == 4:
+        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=[12, 10])
+        # Netflix subplot 
+        ax1.pie([float(Vals) for Vals in NetflixDict.values()], autopct="%.1f%%", labels=[NetLabels for NetLabels in NetflixDict], pctdistance=0.8)
+        ax1.set_title('Netflix Plot')
+        # Hulu subplot 
+        ax2.pie([float(Vals) for Vals in HuluDict.values()], autopct="%.1f%%", labels=[HuluLabels for HuluLabels in HuluDict], pctdistance=0.8)
+        ax2.set_title('Hulu Plot')
+        # Prime subplot 
+        ax3.pie([float(Vals) for Vals in PrimeDict.values()], autopct="%.1f%%", labels=[PrimeLabels for PrimeLabels in PrimeDict], pctdistance=0.8)
+        ax3.set_title('Prime Plot')
+        # Disney subplot 
+        ax4.pie([float(Vals) for Vals in DisneyDict.values()], autopct="%.1f%%", labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=0.8)
+        ax4.set_title('Disney Plot')
+        # if not ExplodeList:    
+        #     plt.pie(x=DataDict.values(), autopct="%.1f%%", labels=labels, pctdistance=0.8) 
+        # else:
+        #     plt.pie(x=DataDict.values(), explode=ExplodeList, autopct="%.1f%%", labels=labels, pctdistance=0.8)
+        plt.set_cmap('PuBuGn')
+        # plt.title(Title, fontsize=18)
+        fig.savefig(Filename + '.png')
+    elif NumSubplots == 2:
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=[12, 10])
+        ax1.pie([float(Vals) for Vals in NetflixDict.values()], explode=ExplodeList, autopct="%.1f%%", labels=[NetLabels for NetLabels in NetflixDict], pctdistance=0.8)
+        ax1.set_title('Netflix Plot')
+        # Hulu subplot 
+        ax2.pie([float(Vals) for Vals in HuluDict.values()], explode=ExplodeList, autopct="%.1f%%", labels=[HuluLabels for HuluLabels in HuluDict], pctdistance=0.8)
+        ax2.set_title('Hulu Plot')
+        fig.savefig(Filename + '1.png')
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=[12, 10])
+        # Prime subplot 
+        ax1.pie([float(Vals) for Vals in PrimeDict.values()], autopct="%.1f%%", labels=[PrimeLabels for PrimeLabels in PrimeDict], pctdistance=0.8)
+        ax1.set_title('Prime Plot')
+        # Disney subplot 
+        ax2.pie([float(Vals) for Vals in DisneyDict.values()], autopct="%.1f%%", labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=0.8)
+        ax2.set_title('Disney Plot')
+        fig.savefig(Filename + '2.png')
+    else:
+        # Netflix Plot
+        fig, ax1 = plt.subplots(figsize=[12,10])
+        ax1.pie([float(Vals) for Vals in NetflixDict.values()], explode=ExplodeList[0], autopct="%.1f%%", labels=[NetLabels for NetLabels in NetflixDict], pctdistance=0.8)
+        ax1.set_title('Netflix Plot')   
+        fig.savefig(Filename + 'Netflix.png')
+
+        # Hulu Plot
+        fig, ax1 = plt.subplots(figsize=[12,10])
+        ax1.pie([float(Vals) for Vals in HuluDict.values()], explode=ExplodeList[1], autopct="%.1f%%", labels=[HuluLabels for HuluLabels in HuluDict], pctdistance=0.8)
+        ax1.set_title('Hulu Plot')   
+        fig.savefig(Filename + 'Hulu.png')
+
+        # Prime Plot
+        fig, ax1 = plt.subplots(figsize=[12,10])
+        ax1.pie([float(Vals) for Vals in PrimeDict.values()], explode=ExplodeList[2], autopct="%.1f%%", labels=[PrimeLabels for PrimeLabels in PrimeDict], pctdistance=0.8)
+        ax1.set_title('Prime Plot')   
+        fig.savefig(Filename + 'Prime.png')
+
+        # Disney Plot
+        fig, ax1 = plt.subplots(figsize=[12,10])
+        ax1.pie([float(Vals) for Vals in DisneyDict.values()], explode=ExplodeList[3], autopct="%.1f%%", labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=0.8)
+        ax1.set_title('Disney Plot')   
+        fig.savefig(Filename + 'Disney.png')
+        
+
+
 
 def movies_bar_charts(StreamingPlatform, Data1, Data1Name, Filename):
     '''
