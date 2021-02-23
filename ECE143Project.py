@@ -97,7 +97,7 @@ for genre in DisneyOrder:
 DictSize = len(DisneyOrderedDict)
 ExplodeListDisney = [0.005]*DictSize
 movie_plots.movie_pie_charts(NetflixOrderedDict, HuluOrderedDict, PrimeOrderedDict, DisneyOrderedDict, "Movies Genres", \
-    "MoviesGenresPieChart", 1, [ExplodeListNetflix, ExplodeListHulu, ExplodeListPrime, ExplodeListDisney])
+    "MoviesGenresPieChart", 2, [ExplodeListNetflix, ExplodeListHulu, ExplodeListPrime, ExplodeListDisney])
 
 # ----------------------------------------------------------------------------------------------------------------------------------
 
