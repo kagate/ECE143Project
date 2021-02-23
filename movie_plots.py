@@ -44,6 +44,8 @@ def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filena
         plt.set_cmap('PuBuGn')
         # plt.title(Title, fontsize=18)
         fig.savefig(Filename + '.png')
+    
+    # option currently not used for any figures, but left in for team to decide if subplots with two figures on them could be used anywhere
     elif NumSubplots == 2:
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=[12, 10])
         ax1.pie([float(Vals) for Vals in NetflixDict.values()], explode=ExplodeList, autopct="%.1f%%", labels=[NetLabels for NetLabels in NetflixDict], pctdistance=0.8)
@@ -112,6 +114,31 @@ def movies_bar_charts(StreamingPlatform, Data1, Data1Name, Filename):
     BarChartFig = sns.barplot(x="Streaming Platform", y=Data1Name, data=FinalDataStruct, palette="Blues_d", alpha=.5)
     plt.savefig(Filename)
 
+def movies_grouped_bar_charts(StreamingPlatform, Data1, Data1Name, Filename):
+    '''
+    This function makes a bar graph with x-values=StreamingPlatform and y-values=Data1
+    :param StreamingPlatform: list of streaming platforms
+    :param Data1: List containing data on one attribute of each streaming platform
+    :param Data1Name: Name of attribute in Data1 (e.g. "Popular Movie Count")
+    :param Filename: Filename of saved bar chart 
+    :type StreamingPlatform: list of strings
+    :type Data1: list 
+    :type Data1Name: string
+    :type Filename: string
+    '''
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    assert isinstance(StreamingPlatform, list), "StreamingPlatform must be a list"
+    assert isinstance(Data1, list), "Data1 must be a list"
+    assert isinstance(Filename, str), "Filename must be a string"
+    assert isinstance(Data1Name, str), "Data1Name must be a string"
+
+    plt.figure()
+    FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1})
+    BarChartFig = sns.barplot(x="Streaming Platform", y=Data1Name, data=FinalDataStruct, palette="Blues_d", alpha=.5)
+    plt.savefig(Filename)
 
 def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
     '''
@@ -143,6 +170,8 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
     import seaborn as sns
     import matplotlib.pyplot as plt
 
+    sns.set(rc={'figure.figsize':(12, 10)})
+
     StreamingPlatform = ["Netflix"]*len(Data1[0]) + ["Hulu"]*len(Data1[1]) + ["Prime"]*len(Data1[2]) + ["Disney+"]*len(Data1[3])
     Data1List = sum(Data1, [])
 
@@ -155,8 +184,10 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
     else:
         FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1List})
 
-    IMDBScatter = sns.catplot(x="Streaming Platform", y=Data1Name, hue=Data2Name, data=FinalDataStruct, palette="mako", alpha=.5)
-    IMDBScatter.savefig(Filename)
+    plt.figure()
+    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue=Data2Name, data=FinalDataStruct, palette="mako", size=4, alpha=.5)
+    IMDBScatter = swarm_plot.get_figure()
+    IMDBScatter.savefig(Filename) 
 
 def heatmap_plots(data, row_labels, col_labels, Filename):
     '''
