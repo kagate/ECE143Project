@@ -30,7 +30,6 @@ HuluAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[8]) == 1]
 PrimeAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[9]) == 1]
 DisneyAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[10]) == 1]
 
-
 # Make pie chart of movie age ratings, consider empty data entries as unrated films
 # Netflix plot
 NetflixAgesDict = Counter(NetflixAgeRatingsTemp)
@@ -61,16 +60,16 @@ PrimeGenres = sum(PrimeGenresTemp, [])
 DisneyGenres = sum(DisneyGenresTemp, [])
 
 # Netflix Plot
-Order = ['Action', 'Documentary', 'Adventure', 'Musical', 'Thriller', 'Sci-Fi', 'History', 'Sport', \
-     'Comedy', 'Short', 'Western', 'Family', 'Animation', 'War', 'Talk-Show', 'Drama', 'News', 'Crime', 'Music', 'Fantasy', \
-         'Film-Noir', 'Horror', 'Romance', 'Reality-TV']
+Order = ['Action', 'Documentary', 'Adventure', 'Musical', 'Thriller', 'Sci-Fi', 'Sport', \
+     'Comedy', 'History', 'Short', 'Western', 'Family', 'News', 'Animation', 'War', \
+         'Drama', 'Crime', 'Music', 'Fantasy', 'Film-Noir', 'Horror', 'Romance', 'Reality-TV']
 NetflixGenresDict = Counter(NetflixGenres)
 # Order netflix dictionary 
 NetflixOrderedDict = OrderedDict()
 for genre in Order:
     NetflixOrderedDict[genre] = NetflixGenresDict[genre]
 DictSize = len(NetflixOrderedDict)
-ExplodeListNetflix = [0.05]*DictSize
+ExplodeListNetflix = [0.005]*DictSize
 
 # Hulu Plot
 HuluGenresDict = Counter(HuluGenres)
@@ -78,7 +77,7 @@ HuluOrderedDict = OrderedDict()
 for genre in Order:
     HuluOrderedDict[genre] = HuluGenresDict[genre]
 DictSize = len(HuluOrderedDict)
-ExplodeListHulu = [0.05]*DictSize
+ExplodeListHulu = [0.005]*DictSize
 
 # Prime Plot
 PrimeGenresDict = Counter(PrimeGenres)
@@ -86,7 +85,7 @@ PrimeOrderedDict = OrderedDict()
 for genre in Order:
     PrimeOrderedDict[genre] = PrimeGenresDict[genre]
 DictSize = len(PrimeOrderedDict)
-ExplodeListPrime = [0.05]*DictSize
+ExplodeListPrime = [0.005]*DictSize
 
 # Disney Plot
 DisneyGenresDict = Counter(DisneyGenres)
@@ -96,7 +95,7 @@ DisneyOrder = [genre for genre in Order if DisneyGenresDict.__contains__(genre)]
 for genre in DisneyOrder:
     DisneyOrderedDict[genre] = DisneyGenresDict[genre]
 DictSize = len(DisneyOrderedDict)
-ExplodeListDisney = [0.05]*DictSize
+ExplodeListDisney = [0.005]*DictSize
 movie_plots.movie_pie_charts(NetflixOrderedDict, HuluOrderedDict, PrimeOrderedDict, DisneyOrderedDict, "Movies Genres", \
     "MoviesGenresPieChart", 1, [ExplodeListNetflix, ExplodeListHulu, ExplodeListPrime, ExplodeListDisney])
 
