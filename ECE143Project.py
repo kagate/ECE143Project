@@ -17,7 +17,7 @@ with open('C:/Users/felyl/Documents/ECE143/ProjectData/MoviesOnStreamingPlatform
     NumMovies = len(MovieData)
 
 TVshowData = []
-with open('C:/Users/felyl/Documents/ECE143/ProjectData/tv_shows_with_genres.csv', encoding="utf8") as TVshowsCSVFile:
+with open('C:/Users/felyl/Documents/ECE143/ProjectData/TV_shows_with_genres.csv', encoding="utf8") as TVshowsCSVFile:
     TVshowsCSVReader = csv.reader(TVshowsCSVFile)
     TVshowData = list(TVshowsCSVReader)
     NumTVshows = len(TVshowData)
