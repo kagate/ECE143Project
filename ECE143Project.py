@@ -11,19 +11,19 @@ import movie_plots
 
 # load MoviesOnStreamingPlatforms csv and IMDBMovieData csv
 MovieData = []
-with open('/Users/laurabecerra/code/finalproject/ECE143Project/MoviesOnStreamingPlatforms_updated.csv', encoding="utf8") as MoviesCSVFile:
+with open('C:/Users/felyl/Documents/ECE143/ProjectData/MoviesOnStreamingPlatforms_updated.csv', encoding="utf8") as MoviesCSVFile:
     MoviesCSVReader = csv.reader(MoviesCSVFile)
     MovieData = list(MoviesCSVReader)
     NumMovies = len(MovieData)
 
 TVshowData = []
-with open('/Users/laurabecerra/code/finalproject/ECE143Project/tv_shows_with_genres.csv', encoding="utf8") as TVshowsCSVFile:
+with open('C:/Users/felyl/Documents/ECE143/ProjectData/tv_shows_with_genres.csv', encoding="utf8") as TVshowsCSVFile:
     TVshowsCSVReader = csv.reader(TVshowsCSVFile)
     TVshowData = list(TVshowsCSVReader)
     NumTVshows = len(TVshowData)
 
 IMDBData = []
-with open('/Users/laurabecerra/code/finalproject/ECE143Project/IMDB-Movie-Data.csv', encoding="utf8") as IMDBDataFile:
+with open('C:/Users/felyl/Documents/ECE143/ProjectData/IMDB-Movie-Data.csv', encoding="utf8") as IMDBDataFile:
     IMDBDataReader = csv.reader(IMDBDataFile)
     IMDBData = list(IMDBDataReader)
 
@@ -109,7 +109,7 @@ DisneyTVShowGenres = sum(DisneyGenresTemp_TVShow, [])
 Order = ['Action', 'Documentary', 'Adventure', 'Musical', 'Thriller', 'Sci-Fi', 'Sport', \
      'Comedy', 'History', 'Short', 'Western', 'Family', 'News', 'Animation', 'War', \
          'Drama', 'Crime', 'Music', 'Fantasy', 'Film-Noir', 'Horror', 'Romance', 'Reality-TV']
-NetflixGenresDict = Counter(NetflixGenres)
+NetflixGenresDict = Counter(NetflixMovieGenres)
 # Order netflix dictionary 
 NetflixOrderedDict = OrderedDict()
 for genre in Order:
@@ -118,7 +118,7 @@ DictSize = len(NetflixOrderedDict)
 ExplodeListNetflix = [0.005]*DictSize
 
 # Hulu Plot
-HuluGenresDict = Counter(HuluGenres)
+HuluGenresDict = Counter(HuluMovieGenres)
 HuluOrderedDict = OrderedDict()
 for genre in Order:
     HuluOrderedDict[genre] = HuluGenresDict[genre]
@@ -126,7 +126,7 @@ DictSize = len(HuluOrderedDict)
 ExplodeListHulu = [0.005]*DictSize
 
 # Prime Plot
-PrimeGenresDict = Counter(PrimeGenres)
+PrimeGenresDict = Counter(PrimeMovieGenres)
 PrimeOrderedDict = OrderedDict()
 for genre in Order:
     PrimeOrderedDict[genre] = PrimeGenresDict[genre]
@@ -134,7 +134,7 @@ DictSize = len(PrimeOrderedDict)
 ExplodeListPrime = [0.005]*DictSize
 
 # Disney Plot
-DisneyGenresDict = Counter(DisneyGenres)
+DisneyGenresDict = Counter(DisneyMovieGenres)
 DisneyOrderedDict = OrderedDict()
 # Make disney order.  Note it's different because disney+ contains a subset of the genres on the other three streaming platforms
 DisneyOrder = [genre for genre in Order if DisneyGenresDict.__contains__(genre)]
