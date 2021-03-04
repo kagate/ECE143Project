@@ -146,22 +146,49 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
 
     sns.set(rc={'figure.figsize':(12, 10)})
 
-    StreamingPlatform = ["Netflix"]*len(Data1[0]) + ["Hulu"]*len(Data1[1]) + ["Prime"]*len(Data1[2]) + ["Disney+"]*len(Data1[3])
-    Data1List = sum(Data1, [])
+    # Data1List1 = sum(Data1[0], [])
+    # Data1List2 = sum(Data1[2:], [])
 
-    if Data2:
-        Data2List = sum(Data2, [])
+    StreamingPlatform1 = ["Netflix"]*len(Data1[0]) 
+    StreamingPlatform2 = ["Hulu"]*len(Data1[1])
+    StreamingPlatform3 = ["Prime"]*len(Data1[2])
+    StreamingPlatform4 = ["Disney+"]*len(Data1[3])
+
+    # if Data2:
+    #     Data2List1 = sum(Data2[0:2], [])
+    #     Data2List2 = sum(Data2[2:], [])
 
     # Make data into long-form structure for seaborn plotting
     if Data2:
-        FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1List, Data2Name: Data2List})
+        FinalDataStruct1 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[0], Data2Name: Data2[0]})
+        FinalDataStruct2 = pd.DataFrame({"Streaming Platform": StreamingPlatform2, Data1Name: Data1[1], Data2Name: Data2[1]})
+        FinalDataStruct3 = pd.DataFrame({"Streaming Platform": StreamingPlatform3, Data1Name: Data1[2], Data2Name: Data2[2]})
+        FinalDataStruct4 = pd.DataFrame({"Streaming Platform": StreamingPlatform4, Data1Name: Data1[3], Data2Name: Data2[3]})
     else:
-        FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1List})
+        FinalDataStruct1 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[0]})
+        FinalDataStruct2 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[1]})
+        FinalDataStruct3 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[2]})
+        FinalDataStruct4 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[3]})
 
     plt.figure()
-    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue=Data2Name, data=FinalDataStruct, palette="mako", size=5, alpha=.7)
+    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct1, palette="magma", size=5)
     IMDBScatter = swarm_plot.get_figure()
-    IMDBScatter.savefig(Filename) 
+    IMDBScatter.savefig(Filename+str(1)+".png") 
+
+    plt.figure()
+    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct2, palette="magma", size=5) #alpha=.9
+    IMDBScatter = swarm_plot.get_figure()
+    IMDBScatter.savefig(Filename+str(2)+".png") 
+
+    plt.figure()
+    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct3, palette="magma", size=5)
+    IMDBScatter = swarm_plot.get_figure()
+    IMDBScatter.savefig(Filename+str(3)+".png") 
+
+    plt.figure()
+    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct4, palette="magma", size=5)
+    IMDBScatter = swarm_plot.get_figure()
+    IMDBScatter.savefig(Filename+str(4)+".png") 
 
 def heatmap_plots(data, row_labels, col_labels, Filename):
     '''
