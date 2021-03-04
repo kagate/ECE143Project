@@ -140,15 +140,27 @@ def consolidated_TVshow_data(file_name='tv_shows.csv'):
     TVshow_data_genres = pd.read_csv('TV_shows_genres.csv',index_col=0,dtype={'Title': str, 'Year': int, 'Age': object, 'IMDb':float, 'Rotten Tomatoes':object, 'Netflix':bool, 'Hulu':bool, 'Prime Video':bool, 'Disney+':bool, 'type':bool, 'Genres':object})
     TVshow_data_languages = pd.read_csv('TV_shows_languages.csv',index_col=0,dtype={'Title': str, 'Year': int, 'Age': object, 'IMDb':float, 'Rotten Tomatoes':object, 'Netflix':bool, 'Hulu':bool, 'Prime Video':bool, 'Disney+':bool, 'type':bool, 'Language':object})
 
+    
     # append every new column in each of the above csv's to the original TVshow_data csv
-    TVshow_data['Decade'] = TVshow_data_decade['Decade']
-    TVshow_data['Actors'] = TVshow_data_actors['Actors']
-    TVshow_data['Producers'] = TVshow_data_producers['Producers']
-    TVshow_data['Genres'] = TVshow_data_genres['Genres']
-    TVshow_data['Language'] = TVshow_data_languages['Language']
+    TVshow_data['Decade'] = ''
+    TVshow_data['Actors'] = ''
+    TVshow_data['Producers'] = ''
+    TVshow_data['Genres'] = ''
+    TVshow_data['Language'] = ''
+
+    for index,row in TVshow_data.iterrows():
+        TVshow_data['Decade'][index] = TVshow_data_decade['Decade'][index]
+    for index,row in TVshow_data.iterrows():
+        TVshow_data['Actors'][index] = TVshow_data_actors['Actors'][index]
+    for index,row in TVshow_data.iterrows():
+        TVshow_data['Producers'][index] = TVshow_data_producers['Producers'][index]
+    for index,row in TVshow_data.iterrows():
+        TVshow_data['Genres'][index] = TVshow_data_genres['Genres'][index]
+    for index,row in TVshow_data.iterrows():
+        TVshow_data['Language'][index] = TVshow_data_languages['Language'][index]
 
     # save final dataframe to csv file
     TVshow_data.to_csv(r'TV_shows_all_features.csv',index=False)           
 
 if __name__ == '__main__':
-    print(add_TVshow_producer(file_name='tv_shows.csv'))
+    print(consolidated_TVshow_data(file_name='tv_shows.csv'))
