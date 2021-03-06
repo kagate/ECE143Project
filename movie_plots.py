@@ -114,7 +114,7 @@ def movies_bar_charts(StreamingPlatform, Data1, Data1Name, Filename):
     BarChartFig = sns.barplot(x="Streaming Platform", y=Data1Name, data=FinalDataStruct, palette="Blues_d", alpha=.5)
     plt.savefig(Filename)
 
-def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
+def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", PlotFlag=4):
     '''
     This function makes a scatter plot with the x-values being the different streaming platforms Data1
     is associated with, and the y-values (Data1) being the attribute we want to compare between streaming platforms 
@@ -128,17 +128,21 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
     :param Filename: Filename of saved scatter plot 
     :param Data2: List of lists containing data on one attribute of each streaming platform 
     :param Data2Name: Name of attribute in Data2 (e.g. "Ages")
+    :param PlotFlag: Specifies how many plots to have on one figure. Can take on value 1 or 4.
     :type Data1: List of lists
     :type Data1Name: String
     :type Filename: String
     :type Data2: List of lists
     :type Data2Name: String
+    :type PlotFlag: int
     '''
     assert isinstance(Data1, list), "Data1 must be a list"
     assert isinstance(Data2, list), "Data2 must be a list"
     assert isinstance(Filename, str), "Filename must be a string"
     assert isinstance(Data1Name, str), "Data1Name must be a string"
     assert isinstance(Data2Name, str), "Data2Name must be a string"
+    assert isinstance(PlotFlag, int), "Data2Name must be a string"
+    assert PlotFlag == 1 or PlotFlag == 4, "PlotFlag can only take on values 1 or 4 currently"
 
     import pandas as pd
     import seaborn as sns
@@ -146,49 +150,63 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
 
     sns.set(rc={'figure.figsize':(12, 10)})
 
+    # Create an array with the colors you want to use
+    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd"]
+    # Set your custom color palette
+    sns.set_palette(sns.color_palette(Colors))
     # Data1List1 = sum(Data1[0], [])
     # Data1List2 = sum(Data1[2:], [])
 
-    StreamingPlatform1 = ["Netflix"]*len(Data1[0]) 
-    StreamingPlatform2 = ["Hulu"]*len(Data1[1])
-    StreamingPlatform3 = ["Prime"]*len(Data1[2])
-    StreamingPlatform4 = ["Disney+"]*len(Data1[3])
+    if PlotFlag == 1:
+        StreamingPlatform1 = ["Netflix"]*len(Data1[0]) 
+        StreamingPlatform2 = ["Hulu"]*len(Data1[1])
+        StreamingPlatform3 = ["Prime"]*len(Data1[2])
+        StreamingPlatform4 = ["Disney+"]*len(Data1[3])
 
-    # if Data2:
-    #     Data2List1 = sum(Data2[0:2], [])
-    #     Data2List2 = sum(Data2[2:], [])
-
-    # Make data into long-form structure for seaborn plotting
     if Data2:
-        FinalDataStruct1 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[0], Data2Name: Data2[0]})
-        FinalDataStruct2 = pd.DataFrame({"Streaming Platform": StreamingPlatform2, Data1Name: Data1[1], Data2Name: Data2[1]})
-        FinalDataStruct3 = pd.DataFrame({"Streaming Platform": StreamingPlatform3, Data1Name: Data1[2], Data2Name: Data2[2]})
-        FinalDataStruct4 = pd.DataFrame({"Streaming Platform": StreamingPlatform4, Data1Name: Data1[3], Data2Name: Data2[3]})
-    else:
-        FinalDataStruct1 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[0]})
-        FinalDataStruct2 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[1]})
-        FinalDataStruct3 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[2]})
-        FinalDataStruct4 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[3]})
+        if PlotFlag == 4:
+            StreamingPlatform = sum([["Netflix"]*len(Data1[0]), ["Hulu"]*len(Data1[1]), ["Prime"]*len(Data1[2]), ["Disney+"]*len(Data1[3])], [])
+            Data1 = sum(Data1, [])
+            Data2 = sum(Data2, [])
+    # Make data into long-form structure for seaborn plotting
+    if PlotFlag == 1:
+        if Data2:
+            FinalDataStruct1 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[0], Data2Name: Data2[0]})
+            FinalDataStruct2 = pd.DataFrame({"Streaming Platform": StreamingPlatform2, Data1Name: Data1[1], Data2Name: Data2[1]})
+            FinalDataStruct3 = pd.DataFrame({"Streaming Platform": StreamingPlatform3, Data1Name: Data1[2], Data2Name: Data2[2]})
+            FinalDataStruct4 = pd.DataFrame({"Streaming Platform": StreamingPlatform4, Data1Name: Data1[3], Data2Name: Data2[3]})
+        else:
+            FinalDataStruct1 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[0]})
+            FinalDataStruct2 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[1]})
+            FinalDataStruct3 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[2]})
+            FinalDataStruct4 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[3]})
 
-    plt.figure()
-    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct1, palette="magma", size=5)
-    IMDBScatter = swarm_plot.get_figure()
-    IMDBScatter.savefig(Filename+str(1)+".png") 
+        plt.figure()
+        swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct1, size=5)
+        IMDBScatter = swarm_plot.get_figure()
+        IMDBScatter.savefig(Filename+str(1)+".png") 
 
-    plt.figure()
-    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct2, palette="magma", size=5) #alpha=.9
-    IMDBScatter = swarm_plot.get_figure()
-    IMDBScatter.savefig(Filename+str(2)+".png") 
+        plt.figure()
+        swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct2, size=5) #alpha=.9
+        IMDBScatter = swarm_plot.get_figure()
+        IMDBScatter.savefig(Filename+str(2)+".png") 
 
-    plt.figure()
-    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct3, palette="magma", size=5)
-    IMDBScatter = swarm_plot.get_figure()
-    IMDBScatter.savefig(Filename+str(3)+".png") 
+        plt.figure()
+        swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct3, size=5)
+        IMDBScatter = swarm_plot.get_figure()
+        IMDBScatter.savefig(Filename+str(3)+".png") 
 
-    plt.figure()
-    swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct4, palette="magma", size=5)
-    IMDBScatter = swarm_plot.get_figure()
-    IMDBScatter.savefig(Filename+str(4)+".png") 
+        plt.figure()
+        swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct4, size=5)
+        IMDBScatter = swarm_plot.get_figure()
+        IMDBScatter.savefig(Filename+str(4)+".png") 
+    if PlotFlag == 4:
+        if Data2:
+            FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1, Data2Name: Data2})
+            plt.figure()
+            swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct, size=5)
+            IMDBScatter = swarm_plot.get_figure()
+            IMDBScatter.savefig(Filename+".png") 
 
 def heatmap_plots(data, row_labels, col_labels, Filename):
     '''
