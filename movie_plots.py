@@ -148,7 +148,7 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
     import seaborn as sns
     import matplotlib.pyplot as plt
 
-    sns.set(rc={'figure.figsize':(12, 10)})
+    sns.set(rc={'figure.figsize':(18, 10)})
 
     # Create an array with the colors you want to use
     Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd"]
@@ -184,21 +184,34 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
         plt.figure()
         swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct1, size=5)
         IMDBScatter = swarm_plot.get_figure()
+        swarm_plot.set_xlabel("")
+        swarm_plot.set_ylabel(Data1Name,fontsize=20)
+        swarm_plot.tick_params(labelsize=20)
         IMDBScatter.savefig(Filename+str(1)+".png") 
 
         plt.figure()
         swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct2, size=5) #alpha=.9
         IMDBScatter = swarm_plot.get_figure()
+        swarm_plot.set_xlabel("")
+        swarm_plot.set_ylabel(Data1Name,fontsize=20)
+        swarm_plot.tick_params(labelsize=20)
         IMDBScatter.savefig(Filename+str(2)+".png") 
 
         plt.figure()
         swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct3, size=5)
         IMDBScatter = swarm_plot.get_figure()
+        swarm_plot.set_xlabel("")
+        swarm_plot.set_ylabel(Data1Name,fontsize=20)
+        swarm_plot.tick_params(labelsize=20)
         IMDBScatter.savefig(Filename+str(3)+".png") 
 
         plt.figure()
         swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct4, size=5)
         IMDBScatter = swarm_plot.get_figure()
+        swarm_plot.set_xlabel("")
+        swarm_plot.set_ylabel(Data1Name,fontsize=20)
+        swarm_plot.tick_params(labelsize=20)
+        plt.legend(fontsize='15', title_fontsize='20')
         IMDBScatter.savefig(Filename+str(4)+".png") 
     if PlotFlag == 4:
         if Data2:
@@ -206,7 +219,76 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
             plt.figure()
             swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct, size=5)
             IMDBScatter = swarm_plot.get_figure()
+            swarm_plot.set_xlabel("")
+            swarm_plot.set_ylabel(Data1Name,fontsize=20)
+            swarm_plot.tick_params(labelsize=20)
+            plt.legend(fontsize='15', title_fontsize='20')
             IMDBScatter.savefig(Filename+".png") 
+
+def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, cbar_kw={}, cbarlabel=""):
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import numpy as np
+    
+    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd"]
+    # Create a dataframe
+    NetflixDF = pd.DataFrame({'Languages':NetflixDict.keys(), 'values':NetflixDict.values()})
+    HuluDF = pd.DataFrame({'Languages':HuluDict.keys(), 'values':HuluDict.values()})
+    PrimeDF = pd.DataFrame({'Languages':PrimeDict.keys(), 'values':PrimeDict.values()})
+    DisneyDF = pd.DataFrame({'Languages':DisneyDict.keys(), 'values':DisneyDict.values()})
+    
+    # Reorder it based on the values
+    # ordered_df = df.sort_values(by='values')
+    fig, ([ax1, ax2], [ax3, ax4]) = plt.subplots(2, 2, figsize=[20, 10])
+    
+    # The horizontal plot is made using the hline function
+    # Netflix
+    ax1.hlines(y=NetflixDF['Languages'], xmin=0, xmax=NetflixDF['values'], color=Colors[2], linewidth=3)
+    ax1.plot(NetflixDF['values'], NetflixDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
+    # ax1.yticks(NetflixDF['Languages'], FontSize=14)
+    # Hulu
+    ax2.hlines(y=HuluDF['Languages'], xmin=0, xmax=HuluDF['values'], color=Colors[2], linewidth=3)
+    ax2.plot(HuluDF['values'], HuluDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
+    # Prime
+    ax3.hlines(y=PrimeDF['Languages'], xmin=0, xmax=PrimeDF['values'], color=Colors[2], linewidth=3)
+    ax3.plot(PrimeDF['values'], PrimeDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
+    # Diseny
+    ax4.hlines(y=DisneyDF['Languages'], xmin=0, xmax=DisneyDF['values'], color=Colors[2], linewidth=3)
+    ax4.plot(DisneyDF['values'], DisneyDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
+
+    # Add titles and axis names
+    # ax1.yticks(NetflixDF['Languages'])
+    # ax1.title("Netflix", labelsize=20)
+    # # ax1.xlabel('')
+    # ax1.ylabel('Languages', labelsize=20)
+
+    # Show the plot
+    plt.savefig("lollipop"+".png") 
+
+
+    labels = set(sum([list(NetflixDict.keys()), 
+                        list(HuluDict.keys()), 
+                        list(PrimeDict.keys()), 
+                        list(DisneyDict.keys())], []))
+    # labels = PrimeDict.keys()
+    NetflixVals = [NetflixDict[key] if key in NetflixDict.keys() else 0 for key in labels]
+    HuluVals = [HuluDict[key] if key in HuluDict.keys() else 0 for key in labels]
+    PrimeVals = [PrimeDict[key] if key in PrimeDict.keys() else 0 for key in labels]
+    DisneyVals = [DisneyDict[key] if key in DisneyDict.keys() else 0 for key in labels]
+    width = 0.35       # the width of the bars: can also be len(x) sequence
+
+    fig, ax = plt.subplots()
+
+    ax.bar(list(labels), DisneyVals, width, label='Disney')
+    ax.bar(list(labels), HuluVals, width, bottom=DisneyVals,label='Hulu')
+    ax.bar(list(labels), NetflixVals, width, bottom=np.array(DisneyVals)+np.array(HuluVals), label='Netflix')
+    ax.bar(list(labels), PrimeVals, width, bottom=np.array(DisneyVals)+np.array(NetflixVals)+np.array(HuluVals),label='Prime')
+    
+    ax.set_ylabel('Language Count')
+    plt.setp(ax.get_xticklabels(), rotation=47, fontsize=11, ha="right",rotation_mode="anchor")
+    ax.set_title('')
+    ax.legend()
+    plt.savefig("stackedchart1"+".png") 
 
 def heatmap_plots(data, row_labels, col_labels, Filename):
     '''
