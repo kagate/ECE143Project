@@ -21,6 +21,7 @@ def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filena
     import matplotlib.pyplot as plt
     import matplotlib as mpl
 
+
     mpl.rcParams['font.size'] = 12.0
 
     if NumSubplots == 4:
@@ -109,6 +110,9 @@ def movies_bar_charts(StreamingPlatform, Data1, Data1Name, Filename):
     assert isinstance(Filename, str), "Filename must be a string"
     assert isinstance(Data1Name, str), "Data1Name must be a string"
 
+    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"]
+    sns.set(rc={'axes.facecolor': Colors[4], 'figure.facecolor': Colors[4]})
+
     plt.figure()
     FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1})
     BarChartFig = sns.barplot(x="Streaming Platform", y=Data1Name, data=FinalDataStruct, palette="Blues_d", alpha=.5)
@@ -151,11 +155,12 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
     sns.set(rc={'figure.figsize':(18, 10)})
 
     # Create an array with the colors you want to use
-    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd"]
+    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"] # Jake added Colors[-1] because this is the background of the slides
     # Set your custom color palette
     sns.set_palette(sns.color_palette(Colors))
     # Data1List1 = sum(Data1[0], [])
     # Data1List2 = sum(Data1[2:], [])
+    sns.set(rc={'axes.facecolor': Colors[4], 'figure.facecolor': Colors[4]})
 
     if PlotFlag == 1:
         StreamingPlatform1 = ["Netflix"]*len(Data1[0]) 
@@ -230,7 +235,7 @@ def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, Filename):
     import matplotlib.pyplot as plt
     import numpy as np
     
-    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd"]
+    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"]
     # Create a dataframe
     NetflixDF = pd.DataFrame({'Languages':NetflixDict.keys(), 'values':NetflixDict.values()})
     HuluDF = pd.DataFrame({'Languages':HuluDict.keys(), 'values':HuluDict.values()})
@@ -377,7 +382,9 @@ def heatmap_plots(data, row_labels, col_labels, Filename):
 #--------------------------------------------------------------------------------------
     fig, ax = plt.subplots()
 
-    ColorChoices = colors.ListedColormap(['slategrey', 'powderblue'])
+    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"]
+
+    ColorChoices = colors.ListedColormap([Colors[0], Colors[2]])
     im1, cbar1 = heatmap(data, row_labels, col_labels, ax=ax,
                     cmap=ColorChoices, cbar_kw=dict(ticks=[0, 1]), cbarlabel="")
 

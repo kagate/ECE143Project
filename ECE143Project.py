@@ -13,19 +13,19 @@ import movie_plots
 
 # load MoviesOnStreamingPlatforms csv and IMDBMovieData csv
 MovieData = []
-with open('C:/Users/felyl/Documents/ECE143/ProjectData/MoviesOnStreamingPlatforms_updated.csv', encoding="utf8") as MoviesCSVFile:
+with open('MoviesOnStreamingPlatforms_updated.csv', encoding="utf8") as MoviesCSVFile:
     MoviesCSVReader = csv.reader(MoviesCSVFile)
     MovieData = list(MoviesCSVReader)
     NumMovies = len(MovieData)
 
 TVshowData = []
-with open('C:/Users/felyl/Documents/ECE143/ProjectData/TV_shows_all_features.csv', encoding="utf8") as TVshowsCSVFile:
+with open('tv_shows.csv', encoding="utf8") as TVshowsCSVFile:
     TVshowsCSVReader = csv.reader(TVshowsCSVFile)
     TVshowData = list(TVshowsCSVReader)
     NumTVshows = len(TVshowData)
 
 IMDBData = []
-with open('C:/Users/felyl/Documents/ECE143/ProjectData/IMDB-Movie-Data.csv', encoding="utf8") as IMDBDataFile:
+with open('IMDB-Movie-Data.csv', encoding="utf8") as IMDBDataFile:
     IMDBDataReader = csv.reader(IMDBDataFile)
     IMDBData = list(IMDBDataReader)
 

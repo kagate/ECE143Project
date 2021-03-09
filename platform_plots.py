@@ -84,6 +84,9 @@ def scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name=""):
     import pandas as pd
     import seaborn as sns
 
+    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"]
+    sns.set(rc={'axes.facecolor': Colors[4], 'figure.facecolor': Colors[4]})
+
     StreamingPlatform = ["Netflix"]*len(Data1[0]) + ["Hulu"]*len(Data1[1]) + ["Prime"]*len(Data1[2]) + ["Disney+"]*len(Data1[3])
     Data1List = sum(Data1, [])
 
