@@ -225,7 +225,7 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
             plt.legend(fontsize='15', title_fontsize='20')
             IMDBScatter.savefig(Filename+".png") 
 
-def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, cbar_kw={}, cbarlabel=""):
+def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, Filename):
     import pandas as pd
     import matplotlib.pyplot as plt
     import numpy as np
@@ -255,6 +255,7 @@ def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, cbar_kw={}, cbarlabel
     # Diseny
     ax4.hlines(y=DisneyDF['Languages'], xmin=0, xmax=DisneyDF['values'], color=Colors[2], linewidth=3)
     ax4.plot(DisneyDF['values'], DisneyDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
+    # plt.set_ylabel()
 
     # Add titles and axis names
     # ax1.yticks(NetflixDF['Languages'])
@@ -284,11 +285,11 @@ def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, cbar_kw={}, cbarlabel
     ax.bar(list(labels), NetflixVals, width, bottom=np.array(DisneyVals)+np.array(HuluVals), label='Netflix')
     ax.bar(list(labels), PrimeVals, width, bottom=np.array(DisneyVals)+np.array(NetflixVals)+np.array(HuluVals),label='Prime')
     
-    ax.set_ylabel('Language Count')
-    plt.setp(ax.get_xticklabels(), rotation=47, fontsize=11, ha="right",rotation_mode="anchor")
+    ax.set_ylabel('Number of Movies', fontsize=17)
+    plt.setp(ax.get_xticklabels(), rotation=47, fontsize=17, ha="right",rotation_mode="anchor")
     ax.set_title('')
     ax.legend()
-    plt.savefig("stackedchart1"+".png") 
+    plt.savefig(Filename) 
 
 def heatmap_plots(data, row_labels, col_labels, Filename):
     '''

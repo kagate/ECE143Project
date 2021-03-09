@@ -331,8 +331,8 @@ HuluTVLanguageCounts = {key: HuluTVLanguageCountsTemp[key] for key in AllLanguag
 PrimeTVLanguageCounts = {key: PrimeTVLanguageCountsTemp[key] for key in AllLanguagesTV if PrimeTVLanguageCountsTemp[key] >= 5 if key != "English"}
 DisneyTVLanguageCounts = {key: DisneyTVLanguageCountsTemp[key] for key in AllLanguagesTV if DisneyTVLanguageCountsTemp[key] >= 5 if key != "English"}
 
-movie_plots.lollipop(NetflixLanguageCounts, HuluLanguageCounts, PrimeLanguageCounts, DisneyLanguageCounts)
-movie_plots.lollipop(NetflixTVLanguageCounts, HuluTVLanguageCounts, PrimeTVLanguageCounts, DisneyTVLanguageCounts)
+movie_plots.lollipop(NetflixLanguageCounts, HuluLanguageCounts, PrimeLanguageCounts, DisneyLanguageCounts, "MovieLanguageBarChart.png")
+movie_plots.lollipop(NetflixTVLanguageCounts, HuluTVLanguageCounts, PrimeTVLanguageCounts, DisneyTVLanguageCounts, "TVLanguageBarChart.png")
 
 data = [{'id': 'Netflix', 'datum': 0.25, 'children':NetflixLanguageCounts.values()},
         {'id': 'Hulu', 'datum': 0.25, 'children':HuluLanguageCounts.values()},
