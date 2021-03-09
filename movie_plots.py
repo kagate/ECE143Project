@@ -154,12 +154,10 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
 
     sns.set(rc={'figure.figsize':(18, 10)})
 
-    # Create an array with the colors you want to use
+    # Create array with colors to use
     Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"] # Jake added Colors[-1] because this is the background of the slides
-    # Set your custom color palette
+    # Set custom color palette
     sns.set_palette(sns.color_palette(Colors))
-    # Data1List1 = sum(Data1[0], [])
-    # Data1List2 = sum(Data1[2:], [])
     sns.set(rc={'axes.facecolor': Colors[4], 'figure.facecolor': Colors[4]})
 
     if PlotFlag == 1:
@@ -174,6 +172,7 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
             Data1 = sum(Data1, [])
             Data2 = sum(Data2, [])
     # Make data into long-form structure for seaborn plotting
+    # this case makes it so that swarm plots are plotted on four separate plots
     if PlotFlag == 1:
         if Data2:
             FinalDataStruct1 = pd.DataFrame({"Streaming Platform": StreamingPlatform1, Data1Name: Data1[0], Data2Name: Data2[0]})
@@ -218,6 +217,7 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
         swarm_plot.tick_params(labelsize=20)
         plt.legend(fontsize='15', title_fontsize='20')
         IMDBScatter.savefig(Filename+str(4)+".png") 
+    # this case is for all four swarm plots to be on the same figure
     if PlotFlag == 4:
         if Data2:
             FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1, Data2Name: Data2})
@@ -231,6 +231,24 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
             IMDBScatter.savefig(Filename+".png") 
 
 def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, Filename):
+    '''
+    This function creates a stacked bar chart figure
+    :param NetflixDict: dictionary containing Netflix data to be plotted
+    :param HuluDict: dictionary containing Hulue data to be plotted
+    :param PrimeDict: dictionary containing Prime data to be plotted
+    :param DisneyDict: dictionary containing Disney data to be plotted
+    :param Filename: name of saved figure file
+    :type NetflixDict: dictionary
+    :type HuluDict: dictionary
+    :type PrimeDict: dictionary
+    :type DisneyDict: dictionary
+    :type Filename: string
+    '''
+    assert isinstance(NetflixDict, dict), "NetflixDict must be a dictionary"
+    assert isinstance(HuluDict, dict), "HuluDict must be a dictionary"
+    assert isinstance(PrimeDict, dict), "PrimeDict must be a dictionary"
+    assert isinstance(DisneyDict, dict), "DisneyDict must be a dictionary"
+    assert isinstance(Filename, str), "Filename must be a string"
     import pandas as pd
     import matplotlib.pyplot as plt
     import numpy as np
