@@ -4,6 +4,7 @@ def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filena
     :param DataDict: Dictionary of number of instances of each possible data value (e.g. {'Action Movies': 22, 'Comedy Movies': 43})
     :param Title: Title of figure
     :param Filename: Filename of saved pie chart figure
+    :param NumSubplots: Number of subplots per figure
     :param ExplodeList: List of the amount of separation between pie slices in the pie chart (bigger values mean more separation)
     :type DataDict: dictionary 
     :type Title: string
@@ -16,7 +17,9 @@ def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filena
     assert isinstance(DisneyDict, dict), "Disney data must be a dictionary"
     assert isinstance(Title, str), "Title must be a string"
     assert isinstance(Filename, str), "Filename must be a string"
+    assert isinstance(NumSubplots, int), "NumSubplots must be an int"
     assert isinstance(ExplodeList, list), "ExplodeList must be a list"
+
     
     import matplotlib.pyplot as plt
     import matplotlib as mpl
@@ -24,6 +27,7 @@ def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filena
 
     mpl.rcParams['font.size'] = 12.0
 
+    # four subplots on one figure option
     if NumSubplots == 4:
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=[12, 10])
         # Netflix subplot 
@@ -38,10 +42,6 @@ def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filena
         # Disney subplot 
         ax4.pie([float(Vals) for Vals in DisneyDict.values()], autopct="%.1f%%", labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=.8, labeldistance=1.1)
         ax4.set_title('Disney Plot')
-        # if not ExplodeList:    
-        #     plt.pie(x=DataDict.values(), autopct="%.1f%%", labels=labels, pctdistance=0.8) 
-        # else:
-        #     plt.pie(x=DataDict.values(), explode=ExplodeList, autopct="%.1f%%", labels=labels, pctdistance=0.8)
         plt.set_cmap('PuBuGn')
         # plt.title(Title, fontsize=18)
         fig.savefig(Filename + '.png')
@@ -64,28 +64,29 @@ def movie_pie_charts(NetflixDict, HuluDict, PrimeDict, DisneyDict, Title, Filena
         ax2.pie([float(Vals) for Vals in DisneyDict.values()], explode=ExplodeList[3], autopct="%.1f%%", labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=0.8)
         ax2.set_title('Disney Plot')
         fig.savefig(Filename + '2.png')
+    # one plot per figure option
     else:
         # Netflix Plot
         fig, ax1 = plt.subplots(figsize=[12,10])
-        ax1.pie([float(Vals) for Vals in NetflixDict.values()], explode=ExplodeList[0], autopct="%.1f%%", labeldistance=1.16, labels=[NetLabels for NetLabels in NetflixDict], pctdistance=1.08)
+        ax1.pie([float(Vals) for Vals in NetflixDict.values()], autopct="%.1f%%", labeldistance=1.16, labels=[NetLabels for NetLabels in NetflixDict], pctdistance=1.08)
         ax1.set_title('Netflix Plot')   
         fig.savefig(Filename + 'Netflix.png')
 
         # Hulu Plot
         fig, ax1 = plt.subplots(figsize=[12,10])
-        ax1.pie([float(Vals) for Vals in HuluDict.values()], explode=ExplodeList[1], autopct="%.1f%%", labeldistance=1.16, labels=[HuluLabels for HuluLabels in HuluDict], pctdistance=1.08)
+        ax1.pie([float(Vals) for Vals in HuluDict.values()], autopct="%.1f%%", labeldistance=1.16, labels=[HuluLabels for HuluLabels in HuluDict], pctdistance=1.08)
         ax1.set_title('Hulu Plot')   
         fig.savefig(Filename + 'Hulu.png')
 
         # Prime Plot
         fig, ax1 = plt.subplots(figsize=[12,10])
-        ax1.pie([float(Vals) for Vals in PrimeDict.values()], explode=ExplodeList[2], autopct="%.1f%%", labeldistance=1.16, labels=[PrimeLabels for PrimeLabels in PrimeDict], pctdistance=1.08)
+        ax1.pie([float(Vals) for Vals in PrimeDict.values()], autopct="%.1f%%", labeldistance=1.16, labels=[PrimeLabels for PrimeLabels in PrimeDict], pctdistance=1.08)
         ax1.set_title('Prime Plot')   
         fig.savefig(Filename + 'Prime.png')
 
         # Disney Plot
         fig, ax1 = plt.subplots(figsize=[12,10])
-        ax1.pie([float(Vals) for Vals in DisneyDict.values()], explode=ExplodeList[3], autopct="%.1f%%", labeldistance=1.16, labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=1.08)
+        ax1.pie([float(Vals) for Vals in DisneyDict.values()], autopct="%.1f%%", labeldistance=1.16, labels=[DisneyLabels for DisneyLabels in DisneyDict], pctdistance=1.08)
         ax1.set_title('Disney Plot')   
         fig.savefig(Filename + 'Disney.png')
 
@@ -155,10 +156,10 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
     sns.set(rc={'figure.figsize':(18, 10)})
 
     # Create array with colors to use
-    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"] # Jake added Colors[-1] because this is the background of the slides
+    Colors = ["#3D5941", "#748666", "#CA562C", "#E49E6E", "#f5e7b7"] # Jake added Colors[-1] because this is the background of the slides
     # Set custom color palette
+    sns.set(rc={'axes.facecolor': Colors[4], 'figure.facecolor': Colors[4], "grid.linewidth":1, "grid.color": 'k'})
     sns.set_palette(sns.color_palette(Colors))
-    sns.set(rc={'axes.facecolor': Colors[4], 'figure.facecolor': Colors[4]})
 
     if PlotFlag == 1:
         StreamingPlatform1 = ["Netflix"]*len(Data1[0]) 
@@ -230,7 +231,7 @@ def movie_scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", Plot
             plt.legend(fontsize='15', title_fontsize='20')
             IMDBScatter.savefig(Filename+".png") 
 
-def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, Filename):
+def stacked_bar_chart(NetflixDict, HuluDict, PrimeDict, DisneyDict, Filename):
     '''
     This function creates a stacked bar chart figure
     :param NetflixDict: dictionary containing Netflix data to be plotted
@@ -250,165 +251,42 @@ def lollipop(NetflixDict, HuluDict, PrimeDict, DisneyDict, Filename):
     assert isinstance(DisneyDict, dict), "DisneyDict must be a dictionary"
     assert isinstance(Filename, str), "Filename must be a string"
     import pandas as pd
+    import seaborn as sns
     import matplotlib.pyplot as plt
     import numpy as np
-    
-    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"]
-    # Create a dataframe
-    NetflixDF = pd.DataFrame({'Languages':NetflixDict.keys(), 'values':NetflixDict.values()})
-    HuluDF = pd.DataFrame({'Languages':HuluDict.keys(), 'values':HuluDict.values()})
-    PrimeDF = pd.DataFrame({'Languages':PrimeDict.keys(), 'values':PrimeDict.values()})
-    DisneyDF = pd.DataFrame({'Languages':DisneyDict.keys(), 'values':DisneyDict.values()})
-    
-    # Reorder it based on the values
-    # ordered_df = df.sort_values(by='values')
-    fig, ([ax1, ax2], [ax3, ax4]) = plt.subplots(2, 2, figsize=[20, 10])
-    
-    # The horizontal plot is made using the hline function
-    # Netflix
-    ax1.hlines(y=NetflixDF['Languages'], xmin=0, xmax=NetflixDF['values'], color=Colors[2], linewidth=3)
-    ax1.plot(NetflixDF['values'], NetflixDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
-    # ax1.yticks(NetflixDF['Languages'], FontSize=14)
-    # Hulu
-    ax2.hlines(y=HuluDF['Languages'], xmin=0, xmax=HuluDF['values'], color=Colors[2], linewidth=3)
-    ax2.plot(HuluDF['values'], HuluDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
-    # Prime
-    ax3.hlines(y=PrimeDF['Languages'], xmin=0, xmax=PrimeDF['values'], color=Colors[2], linewidth=3)
-    ax3.plot(PrimeDF['values'], PrimeDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
-    # Diseny
-    ax4.hlines(y=DisneyDF['Languages'], xmin=0, xmax=DisneyDF['values'], color=Colors[2], linewidth=3)
-    ax4.plot(DisneyDF['values'], DisneyDF['Languages'], "o", markerfacecolor=Colors[1], markersize=5)
-    # plt.set_ylabel()
-
-    # Add titles and axis names
-    # ax1.yticks(NetflixDF['Languages'])
-    # ax1.title("Netflix", labelsize=20)
-    # # ax1.xlabel('')
-    # ax1.ylabel('Languages', labelsize=20)
-
-    # Show the plot
-    plt.savefig("lollipop"+".png") 
-
-
+        
     labels = set(sum([list(NetflixDict.keys()), 
                         list(HuluDict.keys()), 
                         list(PrimeDict.keys()), 
                         list(DisneyDict.keys())], []))
-    # labels = PrimeDict.keys()
+
     NetflixVals = [NetflixDict[key] if key in NetflixDict.keys() else 0 for key in labels]
     HuluVals = [HuluDict[key] if key in HuluDict.keys() else 0 for key in labels]
     PrimeVals = [PrimeDict[key] if key in PrimeDict.keys() else 0 for key in labels]
     DisneyVals = [DisneyDict[key] if key in DisneyDict.keys() else 0 for key in labels]
-    width = 0.35       # the width of the bars: can also be len(x) sequence
+    width = 0.35
 
-    fig, ax = plt.subplots()
-
-    ax.bar(list(labels), DisneyVals, width, label='Disney')
-    ax.bar(list(labels), HuluVals, width, bottom=DisneyVals,label='Hulu')
-    ax.bar(list(labels), NetflixVals, width, bottom=np.array(DisneyVals)+np.array(HuluVals), label='Netflix')
-    ax.bar(list(labels), PrimeVals, width, bottom=np.array(DisneyVals)+np.array(NetflixVals)+np.array(HuluVals),label='Prime')
+    Colors = ["#964B00", "#F27900", "#FF9021", "#FFA74F", "#CE5F34", 
+              "#D36D41", "#DC8556", "#E7A575", "#EEC08F", "#F0CB9B",
+              "#F1D2A1", "#D5D3A7", "#B5B991", "#9EA782", "#7B8B6B", 
+              "#607659", "#435E45", "#f5e7b7"]
     
+    fig, ax = plt.subplots()
+    sns.set(rc={'axes.facecolor': Colors[17], 'figure.facecolor': Colors[17], "grid.linewidth":1, "grid.color": 'k'})
+    sns.set_palette(sns.color_palette(Colors))
+
+    LangBottom = np.array([0, 0, 0, 0])
+    # streaming platform on x-axis
+    for lang in range(len(labels)):
+        if all(LangBottom) == 1:
+            ax.bar(["Netflix", "Hulu", "Prime", "Disney"], [NetflixVals[lang], HuluVals[lang], PrimeVals[lang], DisneyVals[lang]], width, label=list(labels)[lang])
+            LangBottom = np.array([NetflixVals[lang], HuluVals[lang], PrimeVals[lang], DisneyVals[lang]])
+        else:
+            ax.bar(["Netflix", "Hulu", "Prime", "Disney"], [NetflixVals[lang], HuluVals[lang], PrimeVals[lang], DisneyVals[lang]], width, bottom=LangBottom, label=list(labels)[lang])
+            LangBottom = LangBottom + np.array([NetflixVals[lang], HuluVals[lang], PrimeVals[lang], DisneyVals[lang]])
+        
     ax.set_ylabel('Number of Movies', fontsize=17)
-    plt.setp(ax.get_xticklabels(), rotation=47, fontsize=17, ha="right",rotation_mode="anchor")
     ax.set_title('')
     ax.legend()
     plt.savefig(Filename) 
-
-def heatmap_plots(data, row_labels, col_labels, Filename):
-    '''
-    This function creates a heatmap plot of the input data.
-
-    :param data: data to be displayed
-    :param row_labels: labels of rows of heatmap
-    :param col_labels: labels of columns of heatmap
-    :param Filename: name of saved heatmap figure
-    :type data: array
-    :type row_labels: list of strings
-    :type column_labels: list of strings
-    :type Filename: string
-    '''
-    import numpy as np
-    import matplotlib
-    import matplotlib.pyplot as plt
-    from matplotlib import colors
-
-    assert isinstance(data, np.ndarray), "input data must be an array"
-    assert isinstance(row_labels, list), "row_labels must be a list"
-    assert isinstance(col_labels, list), "col_labels must be a list"
-    assert isinstance(Filename, str), "Filename must be a string"
-
-    def heatmap(data, row_labels, col_labels, ax=None,
-                cbar_kw={}, cbarlabel="", **kwargs):
-        """
-        Create a heatmap from a numpy array and two lists of labels.
-
-        Parameters
-        ----------
-        data
-            A 2D numpy array of shape (N, M).
-        row_labels
-            A list or array of length N with the labels for the rows.
-        col_labels
-            A list or array of length M with the labels for the columns.
-        ax
-            A `matplotlib.axes.Axes` instance to which the heatmap is plotted.  If
-            not provided, use current axes or create a new one.  Optional.
-        cbar_kw
-            A dictionary with arguments to `matplotlib.Figure.colorbar`.  Optional.
-        cbarlabel
-            The label for the colorbar.  Optional.
-        **kwargs
-            All other arguments are forwarded to `imshow`.
-        """
-
-        if not ax:
-            ax = plt.gca()
-
-        # Plot the heatmap
-        im = ax.imshow(data, **kwargs)
-
-        # Create colorbar
-        cbar = ax.figure.colorbar(im, ax=ax, **cbar_kw)
-        cbar.ax.set_ylabel(cbarlabel, rotation=-90, va="bottom")
-
-        # We want to show all ticks...
-        ax.set_xticks(np.arange(data.shape[1]))
-        ax.set_yticks(np.arange(data.shape[0]))
-        # ... and label them with the respective list entries.
-        ax.set_xticklabels(col_labels)
-        ax.set_yticklabels(row_labels)
-
-        # Let the horizontal axes labeling appear on top.
-        ax.tick_params(top=True, bottom=False,
-                    labeltop=True, labelbottom=False)
-
-        # Rotate the tick labels and set their alignment.
-        plt.setp(ax.get_xticklabels(), rotation=-47, fontsize=8, ha="right",
-                rotation_mode="anchor")
-
-        # Turn spines off and create white grid.
-        for edge, spine in ax.spines.items():
-            spine.set_visible(False)
-
-        ax.set_xticks(np.arange(data.shape[1]+1)-.5, minor=True)
-        ax.set_yticks(np.arange(data.shape[0]+1)-.5, minor=True)
-        ax.grid(which="minor", color="w", linestyle='-', linewidth=3)
-        ax.tick_params(which="minor", bottom=False, left=False)
-
-        return im, cbar
-
-#--------------------------------------------------------------------------------------
-    fig, ax = plt.subplots()
-
-    Colors = ["#546e3d", "#c86a3d", "#e39e63", "#ffe5bd", "#f5e7b7"]
-
-    ColorChoices = colors.ListedColormap([Colors[0], Colors[2]])
-    im1, cbar1 = heatmap(data, row_labels, col_labels, ax=ax,
-                    cmap=ColorChoices, cbar_kw=dict(ticks=[0, 1]), cbarlabel="")
-
-    # im2, cbar2 = heatmap(data[30:59], row_labels[30:59], col_labels[30:59], ax=ax2,
-    #                 cmap=ColorChoices, cbar_kw=dict(ticks=[0, 1]), cbarlabel="")
-
-    fig.tight_layout()
-    fig.savefig(Filename)
     
