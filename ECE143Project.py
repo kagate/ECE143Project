@@ -128,7 +128,6 @@ ExplodeListDisney = [0.005]*DictSize
 platform_plots.pie_charts(NetflixOrderedDict, HuluOrderedDict, PrimeOrderedDict, DisneyOrderedDict, "Movies Genres", \
     "MoviesGenresPieChart", 1, [ExplodeListNetflix, ExplodeListHulu, ExplodeListPrime, ExplodeListDisney])
 
-
 TVOrder = ['Drama', 'Travel', 'Children', 'Supernatural', 'Adventure', 'Music', 'Romance', 'Fantasy', 'Horror', \
            'Crime', 'Action', 'Sports', 'Family', 'Science-Fiction', 'Mystery', 'Comedy', 'Anime', 'History', 'Food']
 # Netflix TV Plot
