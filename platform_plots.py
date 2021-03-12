@@ -223,7 +223,7 @@ def scatter_plots(Data1, Data1Name, Filename, Data2=[], Data2Name="", PlotFlag=4
         if Data2:
             FinalDataStruct = pd.DataFrame({"Streaming Platform": StreamingPlatform, Data1Name: Data1, Data2Name: Data2})
             plt.figure()
-            swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct, size=5)
+            swarm_plot = sns.swarmplot(x="Streaming Platform", y=Data1Name, hue_order=["18+", "13+", "7+", "all"], hue=Data2Name, data=FinalDataStruct, size=4.7)
             IMDBScatter = swarm_plot.get_figure()
             swarm_plot.set_xlabel("")
             swarm_plot.set_ylabel(Data1Name,fontsize=20)
