@@ -7,7 +7,6 @@ from collections import OrderedDict
 
 # Other functions
 import platform_plots
-import movie_plots
 
 # load MoviesOnStreamingPlatforms csv and IMDBMovieData csv
 MovieData = []
@@ -52,7 +51,7 @@ NetflixAgesDict = Counter(NetflixAgeRatingsTemp)
 HuluAgesDict = Counter(HuluAgeRatingsTemp)
 PrimeAgesDict = Counter(PrimeAgeRatingsTemp)
 DisneyAgesDict = Counter(DisneyAgeRatingsTemp)
-movie_plots.movie_pie_charts(NetflixAgesDict, HuluAgesDict, PrimeAgesDict, DisneyAgesDict, "Streaming Platform Age Ratings", "MoviePlatformAgeRatings", 4, ExplodeList=[])
+platform_plots.pie_charts(NetflixAgesDict, HuluAgesDict, PrimeAgesDict, DisneyAgesDict, "Streaming Platform Age Ratings", "MoviePlatformAgeRatings", 4, ExplodeList=[])
 
 
 # Plot TV shows
@@ -60,7 +59,7 @@ NetflixAgesTVshowDict = Counter(NetflixAgeRatingsTemp_TVshow)
 HuluAgesTVshowDict = Counter(HuluAgeRatingsTemp_TVshow)
 PrimeAgesTVshowDict = Counter(PrimeAgeRatingsTemp_TVshow)
 DisneyAgesTVshowDict = Counter(DisneyAgeRatingsTemp_TVshow)
-movie_plots.movie_pie_charts(NetflixAgesTVshowDict, HuluAgesTVshowDict, PrimeAgesTVshowDict, DisneyAgesTVshowDict, "Streaming Platform Age Ratings", "TVPlatformAgeRatings", 4, ExplodeList=[])
+platform_plots.pie_charts(NetflixAgesTVshowDict, HuluAgesTVshowDict, PrimeAgesTVshowDict, DisneyAgesTVshowDict, "Streaming Platform Age Ratings", "TVPlatformAgeRatings", 4, ExplodeList=[])
 
 # ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -126,7 +125,7 @@ for genre in DisneyOrder:
     DisneyOrderedDict[genre] = DisneyGenresDict[genre]
 DictSize = len(DisneyOrderedDict)
 ExplodeListDisney = [0.005]*DictSize
-movie_plots.movie_pie_charts(NetflixOrderedDict, HuluOrderedDict, PrimeOrderedDict, DisneyOrderedDict, "Movies Genres", \
+platform_plots.pie_charts(NetflixOrderedDict, HuluOrderedDict, PrimeOrderedDict, DisneyOrderedDict, "Movies Genres", \
     "MoviesGenresPieChart", 1, [ExplodeListNetflix, ExplodeListHulu, ExplodeListPrime, ExplodeListDisney])
 
 
@@ -164,7 +163,7 @@ for genre in TVOrder:
 DictSize = len(DisneyTVOrderedDict)
 ExplodeListDisneyTV = [0.005]*DictSize
 
-movie_plots.movie_pie_charts(NetflixTVOrderedDict, HuluTVOrderedDict, PrimeTVOrderedDict, DisneyTVOrderedDict, "TV Show Genres", \
+platform_plots.pie_charts(NetflixTVOrderedDict, HuluTVOrderedDict, PrimeTVOrderedDict, DisneyTVOrderedDict, "TV Show Genres", \
     "TVGenresPieChart", 1, [ExplodeListNetflixTV, ExplodeListHuluTV, ExplodeListPrimeTV, ExplodeListDisneyTV])
 # ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -204,8 +203,8 @@ IMDBTVshowAges = [NetflixIMDBTVshowAges, HuluIMDBTVshowAges, PrimeIMDBTVshowAges
 MoviePlotFlag = 4
 TVPlotFlag = 4
 
-movie_plots.movie_scatter_plots(IMDBMovieScores, "IMDB Scores", 'IMDBMovieScoresScatterPlot', IMDBMovieAges, "Ages", MoviePlotFlag)
-movie_plots.movie_scatter_plots(IMDBTVshowScores, "IMDB TV Show Scores", 'IMDBTVShowScoresScatterPlot.png', IMDBTVshowAges, "Ages", TVPlotFlag)
+platform_plots.scatter_plots(IMDBMovieScores, "IMDB Scores", 'IMDBMovieScoresScatterPlot', IMDBMovieAges, "Ages", MoviePlotFlag)
+platform_plots.scatter_plots(IMDBTVshowScores, "IMDB TV Show Scores", 'IMDBTVShowScoresScatterPlot.png', IMDBTVshowAges, "Ages", TVPlotFlag)
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Extract and plot Rotten Tomato ratings
@@ -241,8 +240,8 @@ RTMovieAges = [NetflixRTAges, HuluRTAges, PrimeRTAges, DisneyRTAges]
 RTTVshowScores = [NetflixRTTVshowScores, HuluRTTVshowScores, PrimeRTTVshowScores, DisneyRTTVshowScores]
 RTTVshowAges = [NetflixRTTVshowAges, HuluRTTVshowAges, PrimeRTTVshowAges, DisneyRTTVshowAges]
 
-movie_plots.movie_scatter_plots(RTMovieScores, "Rotten Tomato Movie Scores", 'RottenTomatoScoresScatterPlot', RTMovieAges, "Ages", 4)
-movie_plots.movie_scatter_plots(RTTVshowScores, "Rotten Tomato TV Show Scores", 'RottenTomatoTVShowScoresScatterPlot', RTTVshowAges, "Ages", 4)
+platform_plots.scatter_plots(RTMovieScores, "Rotten Tomato Movie Scores", 'RottenTomatoScoresScatterPlot', RTMovieAges, "Ages", 4)
+platform_plots.scatter_plots(RTTVshowScores, "Rotten Tomato TV Show Scores", 'RottenTomatoTVShowScoresScatterPlot', RTTVshowAges, "Ages", 4)
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Bar graph of # of popular movies each streaming platform has
@@ -316,5 +315,5 @@ HuluTVLanguageCounts = {key: HuluTVLanguageCountsTemp[key] for key in AllLanguag
 PrimeTVLanguageCounts = {key: PrimeTVLanguageCountsTemp[key] for key in AllLanguagesTV if PrimeTVLanguageCountsTemp[key] >= 5 if key != "English"}
 DisneyTVLanguageCounts = {key: DisneyTVLanguageCountsTemp[key] for key in AllLanguagesTV if DisneyTVLanguageCountsTemp[key] >= 5 if key != "English"}
 
-movie_plots.stacked_bar_chart(NetflixLanguageCounts, HuluLanguageCounts, PrimeLanguageCounts, DisneyLanguageCounts, "MovieLanguageBarChart.png")
-movie_plots.stacked_bar_chart(NetflixTVLanguageCounts, HuluTVLanguageCounts, PrimeTVLanguageCounts, DisneyTVLanguageCounts, "TVLanguageBarChart.png")
+platform_plots.stacked_bar_chart(NetflixLanguageCounts, HuluLanguageCounts, PrimeLanguageCounts, DisneyLanguageCounts, "MovieLanguageBarChart.png")
+platform_plots.stacked_bar_chart(NetflixTVLanguageCounts, HuluTVLanguageCounts, PrimeTVLanguageCounts, DisneyTVLanguageCounts, "TVLanguageBarChart.png")
