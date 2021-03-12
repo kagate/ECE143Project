@@ -4,8 +4,6 @@ import csv
 import numpy as np
 from collections import Counter
 from collections import OrderedDict
-from pprint import pprint as pp
-import circlify as circ
 
 # Other functions
 import platform_plots
@@ -19,7 +17,7 @@ with open('MoviesOnStreamingPlatforms_updated.csv', encoding="utf8") as MoviesCS
     NumMovies = len(MovieData)
 
 TVshowData = []
-with open('tv_shows.csv', encoding="utf8") as TVshowsCSVFile:
+with open('TV_shows_all_features.csv', encoding="utf8") as TVshowsCSVFile:
     TVshowsCSVReader = csv.reader(TVshowsCSVFile)
     TVshowData = list(TVshowsCSVReader)
     NumTVshows = len(TVshowData)
@@ -43,41 +41,26 @@ PrimeAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[9]) == 1]
 DisneyAgeRatingsTemp = [row[4] for row in AdjustedMovieData if int(row[10]) == 1]
 
 #TV Show age ratings
-NetflixAgeRatingsTemp_TVshow = [row[3] for row in AdjustedTVshowData if row[5] == "TRUE"]
-HuluAgeRatingsTemp_TVshow = [row[3] for row in AdjustedTVshowData if row[6] == "TRUE"]
-PrimeAgeRatingsTemp_TVshow = [row[3] for row in AdjustedTVshowData if row[7] == "TRUE"]
-DisneyAgeRatingsTemp_TVshow = [row[3] for row in AdjustedTVshowData if row[8] == "TRUE"]
+NetflixAgeRatingsTemp_TVshow = [row[2] for row in AdjustedTVshowData if row[5] == "True"]
+HuluAgeRatingsTemp_TVshow = [row[2] for row in AdjustedTVshowData if row[6] == "True"]
+PrimeAgeRatingsTemp_TVshow = [row[2] for row in AdjustedTVshowData if row[7] == "True"]
+DisneyAgeRatingsTemp_TVshow = [row[2] for row in AdjustedTVshowData if row[8] == "True"]
 
 # Make pie chart of movie age ratings, consider empty data entries as unrated films
-# Netflix plot movies
+# Plot movies
 NetflixAgesDict = Counter(NetflixAgeRatingsTemp)
-
-# Netflix plot TV shows
-NetflixAgesTVshowDict = Counter(NetflixAgeRatingsTemp_TVshow)
-platform_plots.pie_charts(NetflixAgesTVshowDict, "Netflix TV Show Age Ratings", "NetflixTVShowAgeRatingsChart.png")
-
-# Hulu Plot movies
 HuluAgesDict = Counter(HuluAgeRatingsTemp)
-
-# Hulu Plot TV shows
-HuluAgesTVshowDict = Counter(HuluAgeRatingsTemp_TVshow)
-platform_plots.pie_charts(HuluAgesTVshowDict, "Hulu TV Show Age Ratings", "HuluTVShowAgeRatingsChart.png")
-
-# Prime Plot movies
 PrimeAgesDict = Counter(PrimeAgeRatingsTemp)
-
-# Prime Plot TV shows
-PrimeAgesTVshowDict = Counter(PrimeAgeRatingsTemp_TVshow)
-platform_plots.pie_charts(PrimeAgesTVshowDict, "Prime TV Show Age Ratings", "PrimeTVShowAgeRatingsChart.png")
-
-# Disney Plot movies
 DisneyAgesDict = Counter(DisneyAgeRatingsTemp)
+movie_plots.movie_pie_charts(NetflixAgesDict, HuluAgesDict, PrimeAgesDict, DisneyAgesDict, "Streaming Platform Age Ratings", "MoviePlatformAgeRatings", 4, ExplodeList=[])
 
-movie_plots.movie_pie_charts(NetflixAgesDict, HuluAgesDict, PrimeAgesDict, DisneyAgesDict, "Streaming Platform Age Ratings", "PlatformAgeRatings", 4, ExplodeList=[])
 
-# Disney Plot TV shows
+# Plot TV shows
+NetflixAgesTVshowDict = Counter(NetflixAgeRatingsTemp_TVshow)
+HuluAgesTVshowDict = Counter(HuluAgeRatingsTemp_TVshow)
+PrimeAgesTVshowDict = Counter(PrimeAgeRatingsTemp_TVshow)
 DisneyAgesTVshowDict = Counter(DisneyAgeRatingsTemp_TVshow)
-platform_plots.pie_charts(DisneyAgesTVshowDict, "Disney TV Show Age Ratings", "DisneyTVShowAgeRatingsChart.png")
+movie_plots.movie_pie_charts(NetflixAgesTVshowDict, HuluAgesTVshowDict, PrimeAgesTVshowDict, DisneyAgesTVshowDict, "Streaming Platform Age Ratings", "TVPlatformAgeRatings", 4, ExplodeList=[])
 
 # ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -90,11 +73,11 @@ PrimeGenresTemp_movie = [row[13].split(',') for row in AdjustedMovieData if int(
 DisneyGenresTemp_movie = [row[13].split(',') for row in AdjustedMovieData if int(row[10]) == 1]
 
 # TV Shows
-AdjustedTVshowDataGenres = [row for row in AdjustedTVshowData if len(row) == 12]
-NetflixGenresTemp_TVShow = [row[11].split(',') for row in AdjustedTVshowDataGenres if row[5] == "TRUE"]
-HuluGenresTemp_TVShow = [row[11].split(',') for row in AdjustedTVshowDataGenres if row[6] == "TRUE"]
-PrimeGenresTemp_TVShow = [row[11].split(',') for row in AdjustedTVshowDataGenres if row[7] == "TRUE"]
-DisneyGenresTemp_TVShow = [row[11].split(',') for row in AdjustedTVshowDataGenres if row[8] == "TRUE"]
+AdjustedTVshowDataGenres = [row for row in AdjustedTVshowData if row[13] != '[]']
+NetflixGenresTemp_TVShow = [((((row[13].replace('[', '')).replace(']', '')).replace('\'', '')).replace(' ', '')).split(',') for row in AdjustedTVshowDataGenres if row[5] == "True"]
+HuluGenresTemp_TVShow = [((((row[13].replace('[', '')).replace(']', '')).replace('\'', '')).replace(' ', '')).split(',') for row in AdjustedTVshowDataGenres if row[6] == "True"]
+PrimeGenresTemp_TVShow = [((((row[13].replace('[', '')).replace(']', '')).replace('\'', '')).replace(' ', '')).split(',') for row in AdjustedTVshowDataGenres if row[7] == "True"]
+DisneyGenresTemp_TVShow = [((((row[13].replace('[', '')).replace(']', '')).replace('\'', '')).replace(' ', '')).split(',') for row in AdjustedTVshowDataGenres if row[8] == "True"]
 
 # Flattens the nested lists, so that usage of Counter is possible
 NetflixMovieGenres = sum(NetflixGenresTemp_movie, [])
@@ -107,12 +90,11 @@ HuluTVShowGenres = sum(HuluGenresTemp_TVShow, [])
 PrimeTVShowGenres = sum(PrimeGenresTemp_TVShow, [])
 DisneyTVShowGenres = sum(DisneyGenresTemp_TVShow, [])
 
-# Netflix Plot
 Order = ['Action', 'Documentary', 'Adventure', 'Musical', 'Thriller', 'Sci-Fi', 'Sport', \
      'Comedy', 'History', 'Short', 'Western', 'Family', 'News', 'Animation', 'War', \
          'Drama', 'Crime', 'Music', 'Fantasy', 'Film-Noir', 'Horror', 'Romance', 'Reality-TV']
+# Netflix Plot
 NetflixGenresDict = Counter(NetflixMovieGenres)
-# Order netflix dictionary 
 NetflixOrderedDict = OrderedDict()
 for genre in Order:
     NetflixOrderedDict[genre] = NetflixGenresDict[genre]
@@ -145,31 +127,45 @@ for genre in DisneyOrder:
 DictSize = len(DisneyOrderedDict)
 ExplodeListDisney = [0.005]*DictSize
 movie_plots.movie_pie_charts(NetflixOrderedDict, HuluOrderedDict, PrimeOrderedDict, DisneyOrderedDict, "Movies Genres", \
-    "MoviesGenresPieChart", 2, [ExplodeListNetflix, ExplodeListHulu, ExplodeListPrime, ExplodeListDisney])
+    "MoviesGenresPieChart", 1, [ExplodeListNetflix, ExplodeListHulu, ExplodeListPrime, ExplodeListDisney])
 
+
+TVOrder = ['Drama', 'Travel', 'Children', 'Supernatural', 'Adventure', 'Music', 'Romance', 'Fantasy', 'Horror', \
+           'Crime', 'Action', 'Sports', 'Family', 'Science-Fiction', 'Mystery', 'Comedy', 'Anime', 'History', 'Food']
 # Netflix TV Plot
 NetflixTVShowGenresDict = Counter(NetflixTVShowGenres)
-DictSize = len(NetflixTVShowGenresDict)
-ExplodeListNetflix_TVShow = [0.1]*DictSize
-platform_plots.pie_charts(NetflixTVShowGenresDict, "Netflix TV Shows Genres", "NetflixTVShowsGenres.png", ExplodeListNetflix_TVShow)
+NetflixTVOrderedDict = OrderedDict()
+for genre in TVOrder:
+    NetflixTVOrderedDict[genre] = NetflixTVShowGenresDict[genre]
+DictSize = len(NetflixTVOrderedDict)
+ExplodeListNetflixTV = [0.005]*DictSize
 
 # Hulu TV Plot
 HuluTVShowGenresDict = Counter(HuluTVShowGenres)
-DictSize = len(HuluTVShowGenresDict)
-ExplodeListHulu_TVShow = [0.1]*DictSize
-platform_plots.pie_charts(HuluTVShowGenresDict, "Hulu TV Shows Genres", "HuluTVShowsGenres.png", ExplodeListHulu_TVShow)
+HuluTVOrderedDict = OrderedDict()
+for genre in TVOrder:
+    HuluTVOrderedDict[genre] = HuluTVShowGenresDict[genre]
+DictSize = len(HuluTVOrderedDict)
+ExplodeListHuluTV = [0.005]*DictSize
 
 # Prime TV Plot
 PrimeTVShowGenresDict = Counter(PrimeTVShowGenres)
-DictSize = len(PrimeTVShowGenresDict)
-ExplodeListPrime_TVShow = [0.1]*DictSize
-platform_plots.pie_charts(PrimeTVShowGenresDict, "Prime TV Shows Genres", "PrimeTVShowsGenres.png", ExplodeListPrime_TVShow)
+PrimeTVOrderedDict = OrderedDict()
+for genre in TVOrder:
+    PrimeTVOrderedDict[genre] = PrimeTVShowGenresDict[genre]
+DictSize = len(PrimeTVOrderedDict)
+ExplodeListPrimeTV = [0.005]*DictSize
 
 # Disney TV Plot
 DisneyTVShowGenresDict = Counter(DisneyTVShowGenres)
-DictSize = len(DisneyTVShowGenresDict)
-ExplodeListDisney_TVShow = [0.1]*DictSize
-platform_plots.pie_charts(DisneyTVShowGenresDict, "Disney TV Shows Genres", "DisneyTVShowsGenres.png", ExplodeListDisney_TVShow)
+DisneyTVOrderedDict = OrderedDict()
+for genre in TVOrder:
+    DisneyTVOrderedDict[genre] = DisneyTVShowGenresDict[genre]
+DictSize = len(DisneyTVOrderedDict)
+ExplodeListDisneyTV = [0.005]*DictSize
+
+movie_plots.movie_pie_charts(NetflixTVOrderedDict, HuluTVOrderedDict, PrimeTVOrderedDict, DisneyTVOrderedDict, "TV Show Genres", \
+    "TVGenresPieChart", 1, [ExplodeListNetflixTV, ExplodeListHuluTV, ExplodeListPrimeTV, ExplodeListDisneyTV])
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Extract and plot IMDB ratings
@@ -249,14 +245,11 @@ movie_plots.movie_scatter_plots(RTMovieScores, "Rotten Tomato Movie Scores", 'Ro
 movie_plots.movie_scatter_plots(RTTVshowScores, "Rotten Tomato TV Show Scores", 'RottenTomatoTVShowScoresScatterPlot', RTTVshowAges, "Ages", 4)
 # ----------------------------------------------------------------------------------------------------------------------------------
 
-# Make plot showing which streaming platforms have the 1000 most popular movies (according to IMDB)
+# Bar graph of # of popular movies each streaming platform has
 # ----------------------------------------------------------------------------------------------------------------------------------
-# The goal figure here was to have a rectangular grid where each row represents a movie on the 1000 most popular movies list
-# and each column represents a streaming platform.  A grid square will be filled in with one color if the streaming platform 
-# has the movie or filled in with a different color if the streaming platform does not have the movie.
-
-# Only plot first 30 most popular movies for now (for plot spacing reasons)
-MaxEntry = 30
+# uses the IMDB dataset which gives the 1000 most popular movies on IMDB.  This plot will be a bargraph showing how many of these 1000 most 
+# popular movies each streaming platform has.  Note: a movie being on the 1000 most popular movies list is based on more than just the IMDB
+# score, so this gives different info from just the IMDB scores on each streaming platform data we used earlier. 
 MostPopMovies = [row[1] for row in IMDBData[1:]]
 
 NetflixMovies = [row[2] for row in AdjustedMovieData if int(row[7]) == 1]
@@ -269,16 +262,8 @@ PrimePopMovies = [1.0 if movie in PrimeMovies else 0.0 for movie in MostPopMovie
 HuluPopMovies = [1.0 if movie in HuluMovies else 0.0 for movie in MostPopMovies]
 DisneyPopMovies = [1.0 if movie in DisneyMovies else 0.0 for movie in MostPopMovies]
 
-TempList = [NetflixPopMovies[0:MaxEntry], PrimePopMovies[0:MaxEntry], HuluPopMovies[0:MaxEntry], DisneyPopMovies[0:MaxEntry]]
-PopMoviesArray = np.asarray(TempList, dtype=np.float32)
-
 StreamingPlatformsList = ["Netflix", "Prime", "Hulu", "Disney+"]
-platform_plots.heatmap_plots(np.transpose(PopMoviesArray), MostPopMovies[0:MaxEntry], StreamingPlatformsList, "PopularMoviesHeatmap.png")
 
-# ----------------------------------------------------------------------------------------------------------------------------------
-
-# Bar graph of # of popular movies each streaming platform has
-# ----------------------------------------------------------------------------------------------------------------------------------
 NetflixPopMoviesCount = sum(NetflixPopMovies)
 HuluPopMoviesCount = sum(HuluPopMovies)
 PrimePopMoviesCount = sum(PrimePopMovies)
@@ -292,7 +277,7 @@ platform_plots.bar_charts(StreamingPlatformsList, PopMoviesCount, Data1Name, Fil
 
 # ----------------------------------------------------------------------------------------------------------------------------------
 
-# Circlify plot of languages
+# Stacked bar chart of languages
 # ----------------------------------------------------------------------------------------------------------------------------------
 # Movies
 NetflixMovieLanguages = sum([row[15].split(",") for row in AdjustedMovieData if int(row[7]) == 1 if row[15]], [])
@@ -331,20 +316,5 @@ HuluTVLanguageCounts = {key: HuluTVLanguageCountsTemp[key] for key in AllLanguag
 PrimeTVLanguageCounts = {key: PrimeTVLanguageCountsTemp[key] for key in AllLanguagesTV if PrimeTVLanguageCountsTemp[key] >= 5 if key != "English"}
 DisneyTVLanguageCounts = {key: DisneyTVLanguageCountsTemp[key] for key in AllLanguagesTV if DisneyTVLanguageCountsTemp[key] >= 5 if key != "English"}
 
-movie_plots.lollipop(NetflixLanguageCounts, HuluLanguageCounts, PrimeLanguageCounts, DisneyLanguageCounts, "MovieLanguageBarChart.png")
-movie_plots.lollipop(NetflixTVLanguageCounts, HuluTVLanguageCounts, PrimeTVLanguageCounts, DisneyTVLanguageCounts, "TVLanguageBarChart.png")
-
-data = [{'id': 'Netflix', 'datum': 0.25, 'children':NetflixLanguageCounts.values()},
-        {'id': 'Hulu', 'datum': 0.25, 'children':HuluLanguageCounts.values()},
-        {'id': 'Prime', 'datum': 0.25, 'children':PrimeLanguageCounts.values()},
-        {'id': 'Disney', 'datum': 0.25, 'children':DisneyLanguageCounts.values()}]
-circles = circ.circlify(data, show_enclosure=True)
-circ.bubbles(circles=circles)
-
-data = [
-        0.05, {'id': 'a2', 'datum': 0.05},
-        {'id': 'a0', 'datum': 0.8, 'children': [0.3, 0.2, 0.2, 0.1], },
-        {'id': 'a1', 'datum': 0.1, 'children': [
-            {'id': 'a1_1', 'datum': 0.05}, {'datum': 0.04}, 0.01],
-        },
-    ]
+movie_plots.stacked_bar_chart(NetflixLanguageCounts, HuluLanguageCounts, PrimeLanguageCounts, DisneyLanguageCounts, "MovieLanguageBarChart.png")
+movie_plots.stacked_bar_chart(NetflixTVLanguageCounts, HuluTVLanguageCounts, PrimeTVLanguageCounts, DisneyTVLanguageCounts, "TVLanguageBarChart.png")
