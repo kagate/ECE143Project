@@ -47,3 +47,4 @@ Note: the ECE143Project.py script imports platform_plots.py, which includes the 
 **Libraries:** <br>
 The ECE143Project.py file requires the following libraries: csv, numpy, collections, platform_plots <br>
 The platform_plots file requires the following libraries: pandas, seaborn, matplotlib, numpy <br>
+The process_TVshows.py file requires the following: pandas, tvmaze.api <br>   
