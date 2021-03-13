@@ -19,36 +19,36 @@ import warnings; warnings.simplefilter('ignore')
 
 
 def get_data(root_dir = "/"):
-	"""
-	Prepare TF-IDF statistics for recommendation system
-	"""
-	streaming_platform_info = pd.read_csv("MoviesOnStreamingPlatforms_updated.csv")
-	md = pd. read_csv('recommender/data/movies_metadata.csv')
-	md['genres'] = md['genres'].fillna('[]').apply(literal_eval).apply(lambda x: [i['name'] for i in x] if isinstance(x, list) else [])
-	md['year'] = pd.to_datetime(md['release_date'], errors='coerce').apply(lambda x: str(x).split('-')[0] if x != np.nan else np.nan)
+    """
+    Prepare TF-IDF statistics for recommendation system
+    """
+    streaming_platform_info = pd.read_csv("MoviesOnStreamingPlatforms_updated.csv")
+    md = pd. read_csv('recommender/data/movies_metadata.csv')
+    md['genres'] = md['genres'].fillna('[]').apply(literal_eval).apply(lambda x: [i['name'] for i in x] if isinstance(x, list) else [])
+    md['year'] = pd.to_datetime(md['release_date'], errors='coerce').apply(lambda x: str(x).split('-')[0] if x != np.nan else np.nan)
 
-	md = md.drop([19730, 29503, 35587])
-	smd = md[md['title'].isin(streaming_platform_info['Title'])]
+    md = md.drop([19730, 29503, 35587])
+    smd = md[md['title'].isin(streaming_platform_info['Title'])]
 
-	smd['tagline'] = smd['tagline'].fillna('')
-	smd['description'] = smd['overview'] + smd['tagline']
-	smd['description'] = smd['description'].fillna('')
+    smd['tagline'] = smd['tagline'].fillna('')
+    smd['description'] = smd['overview'] + smd['tagline']
+    smd['description'] = smd['description'].fillna('')
 
-	tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
-	tfidf_matrix = tf.fit_transform(smd['description'])
+    tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
+    tfidf_matrix = tf.fit_transform(smd['description'])
 
-	cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
-	smd = smd.reset_index()
-	titles = smd['title']
-	indices = pd.Series(smd.index, index=smd['title'])
+    smd = smd.reset_index()
+    titles = smd['title']
+    indices = pd.Series(smd.index, index=smd['title'])
 
-	return indices, cosine_sim, titles
+    return indices, cosine_sim, titles
 
 def get_recommendations(title, indices, cosine_sim, titles):
-	"""
-	Find top 30 related movies to the given movie using cosine similarity of the feature vector
-	"""
+    """
+    Find top 30 related movies to the given movie using cosine similarity of the feature vector
+    """
     idx = indices[title]
     if not isinstance(idx, np.int64): idx = idx[0]
     sim_scores = list(enumerate(cosine_sim[idx]))
@@ -59,30 +59,30 @@ def get_recommendations(title, indices, cosine_sim, titles):
 
 
 def get_tv_data():
-	"""
-	Prepare the TF-IDF statistics for TV daa
-	"""
+    """
+    Prepare the TF-IDF statistics for TV daa
+    """
 
-	smd = pd.read_csv("data/tv_plot.csv")
+    smd = pd.read_csv("data/tv_plot.csv")
 
-	smd['description'] = smd['Plot']
-	smd['description'] = smd['Plot'].fillna('')
+    smd['description'] = smd['Plot']
+    smd['description'] = smd['Plot'].fillna('')
 
-	tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
-	tfidf_matrix = tf.fit_transform(smd['Plot'])
+    tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
+    tfidf_matrix = tf.fit_transform(smd['Plot'])
 
-	cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
-	smd = smd.reset_index()
-	titles = smd['Title']
-	indices = pd.Series(smd.index, index=smd['Title'])
+    smd = smd.reset_index()
+    titles = smd['Title']
+    indices = pd.Series(smd.index, index=smd['Title'])
 
-	return indices, cosine_sim, titles
+    return indices, cosine_sim, titles
 
 def compute_one_hot_genres(g, genres):
-	"""
-	Compute one-hot encoding for genre variable
-	"""
+    """
+    Compute one-hot encoding for genre variable
+    """
     if not isinstance(g, str):
         return np.zeros(len(genres))
     else:
@@ -92,9 +92,9 @@ def compute_one_hot_genres(g, genres):
         return vec
 
 def compute_plat_feature(name, dic, genres):
-	"""
-	Compute plateformwise feature vector
-	"""
+    """
+    Compute plateformwise feature vector
+    """
     df = dic[name]
     feature = np.zeros(len(genres))
     for item in df["Genres"]:
@@ -108,9 +108,9 @@ def compute_plat_feature(name, dic, genres):
 
 
 def compute_plat_score(name, dic):
-	"""
-	Compute normalized platform similiarity score
-	"""
+    """
+    Compute normalized platform similiarity score
+    """
     df = dic[name]
     score = {}
     score["IMDb"] = np.mean(df["IMDb"].dropna())
@@ -118,9 +118,9 @@ def compute_plat_score(name, dic):
     return score
 
 def generate_genre_radar_plot(streaming_platform_info, plat_dic):
-	"""
-	Generate genre radar plot for each platforms
-	"""
+    """
+    Generate genre radar plot for each platforms
+    """
     genres = set()
     for g in streaming_platform_info["Genres"]:
         if isinstance(g, str):
@@ -180,9 +180,9 @@ def generate_genre_radar_plot(streaming_platform_info, plat_dic):
 
 
 def generate_global_variable(streaming_platform_info, titles):
-	"""
-	Generate three global maps used in platform recommendation
-	"""
+    """
+    Generate three global maps used in platform recommendation
+    """
     movie_set = set(streaming_platform_info["Title"])
     recommender_set = set(titles)
     movie_set_buffer = recommender_set.intersection(movie_set)
@@ -217,9 +217,9 @@ def generate_global_variable(streaming_platform_info, titles):
     
 
 def platform_recommender(list_of_watched, indices, cosine_sim, titles):
-	"""
-	Compute platform recommendation score given a list of watching movies
-	"""
+    """
+    Compute platform recommendation score given a list of watching movies
+    """
     recommended_movies = []
     rec_movie_scores = []
     plat_count = defaultdict(int)
@@ -237,9 +237,9 @@ def platform_recommender(list_of_watched, indices, cosine_sim, titles):
     return plat_score
 
 def generate_portforlio_contents(list_of_watched, streaming_platform_info):
-	"""
-	Generate data for personal portforlio.
-	"""
+    """
+    Generate data for personal portforlio.
+    """
     # preprocess the movie data
     indices, cosine_sim, titles = get_data()
     
@@ -305,9 +305,9 @@ def generate_portforlio_contents(list_of_watched, streaming_platform_info):
     return genre_count, plat_count, plat_score, recommended_move_df
 
 def personal_preference_radar(genre_count):
-	"""
-	Generate personal genre preference radar plot
-	"""
+    """
+    Generate personal genre preference radar plot
+    """
     fig = go.Figure(data=go.Scatterpolar(
       r=list(genre_count.values()),
       theta=list(genre_count.keys()),
@@ -334,9 +334,9 @@ def personal_preference_radar(genre_count):
     fig.show()
 
 def generate_plat_recommendation_plot(plat_count, plat_score):
-	"""
-	Generate platform recommendation plot using plotly
-	"""
+    """
+    Generate platform recommendation plot using plotly
+    """
     fig = go.Figure(data=go.Scatter(
     x=list(plat_count.keys()),
     y=list(plat_score.values()),
@@ -365,9 +365,9 @@ def generate_plat_recommendation_plot(plat_count, plat_score):
     fig.show()
 
 def generate_platwise_movie_recommendation(recommended_move_df):
-	"""
-	Generate four plots with recommended movies.
-	"""
+    """
+    Generate four plots with recommended movies.
+    """
     for plat in ["Netflix", "Prime Video", "Hulu", "Disney+"]:
         df = recommended_move_df
         df = df.loc[df['Platform'] == plat]
