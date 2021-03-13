@@ -22,6 +22,7 @@ Most popular movies on IMDB over 10 year period (for list of most popular movies
 (https://www.kaggle.com/PromptCloudHQ/imdb-data) <br>
 
 **Code:** <br>
+**Platform Analysis Code** <br>
 To generate a subset of the plots we used in our platform analysis, run the ECE143Project.py script.  It generates numerous plots, several of which were not included in our final presentation (for time purposes). The plots generated are listed below. 
 -Pie charts displaying the breakdown of age ratings of movies and tv shows on each platform <br>
 -Pie charts showing the genre breakdown of movies and tv shows on each platform <br>
@@ -31,6 +32,7 @@ To generate a subset of the plots we used in our platform analysis, run the ECE1
 -Stacked bar charts showing the number of movies available in different languages on each streaming platform <br>
 
 Note: the ECE143Project.py script imports platform_plots.py, which includes the plotting functions which generate the pie charts, swarmplots, bar chart, and stacked bar charts.
+**Recommender System Code** <br>
 
 **Libraries:** <br>
 The ECE143Project.py file requires the following libraries: csv, numpy, collections, platform_plots <br>
