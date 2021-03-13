@@ -4,7 +4,9 @@
 ### Team Members: Katrina Agate, Shivani Athavale, Laura Becerra, Jake Daly, Jinyu Zhao
 
 ---
-
+**Install Dependencies:**<br>
+To install the dependencies that we used for this project, run the following commands. <br>
+`pip install requirements.txt`
 
 **Problem:** <br>
 Comparing movies and tv shows available on different platforms. <br>
