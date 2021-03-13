@@ -22,7 +22,7 @@ def get_data(root_dir = "/"):
     """
     Prepare TF-IDF statistics for recommendation system
     """
-    streaming_platform_info = pd.read_csv("MoviesOnStreamingPlatforms_updated.csv")
+    streaming_platform_info = pd.read_csv("data/MoviesOnStreamingPlatforms_updated.csv")
     md = pd. read_csv('recommender/data/movies_metadata.csv')
     md['genres'] = md['genres'].fillna('[]').apply(literal_eval).apply(lambda x: [i['name'] for i in x] if isinstance(x, list) else [])
     md['year'] = pd.to_datetime(md['release_date'], errors='coerce').apply(lambda x: str(x).split('-')[0] if x != np.nan else np.nan)
