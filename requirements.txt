@@ -3,3 +3,8 @@ pandas
 numpy
 python-tvmaze
 matplotlib
+plotly
+scikit-learn
+nltk
+scipy
+wordcloud
