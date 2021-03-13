@@ -31,6 +31,10 @@ To generate a subset of the plots we used in our platform analysis, run the ECE1
 -Bar chart showing the number of movies on the 1000 most popular IMDB movies list each streaming platform contains <br>
 -Stacked bar charts showing the number of movies available in different languages on each streaming platform <br>
 
+**TV Show Data Extraction Code** <br>
+To extract additional TV show data, the functions in process_TVshows.py each extract a different TV show feature for each TV show in the original Kaggle dataset from an API called TvMaze. The last function in the py file consolidates all of these extracted features into one csv file. All functions take in the original Kaggle TV show dataset titled "tv_shows.csv" <br>
+
+
 Note: the ECE143Project.py script imports platform_plots.py, which includes the plotting functions which generate the pie charts, swarmplots, bar chart, and stacked bar charts. <br>
 **Recommender System Code** <br>
 
