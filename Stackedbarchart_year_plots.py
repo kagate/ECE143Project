@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud 
 import itertools
 import random
-tvdf = pd.read_csv('TV_shows_all_features.csv', converters = {'Timestamp':str})
-moviedf = pd.read_csv('MoviesOnStreamingPlatforms_updated.csv', converters = {'Timestamp':str})
-imdbdf = pd.read_csv('IMDB-Movie-Data.csv', converters = {'Timestamp':str})
+tvdf = pd.read_csv('data/TV_shows_all_features.csv', converters = {'Timestamp':str})
+moviedf = pd.read_csv('data/MoviesOnStreamingPlatforms_updated.csv', converters = {'Timestamp':str})
+imdbdf = pd.read_csv('data/IMDB-Movie-Data.csv', converters = {'Timestamp':str})
 colors = ["#546E3D", "#9AFF47", "#E39E63", "#760000", "#9B2700", "#D8EA65", "#9B6900", "#C28500", "#FF950E", "#FF5D1C", "#DFB28A", "#C86A3D", "#CED09F"]
 def create_dict(df,platform):
     ''' 

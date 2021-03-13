@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud 
 import itertools
 import random
-tvdf = pd.read_csv('TV_shows_all_features.csv', converters = {'Timestamp':str})
-moviedf = pd.read_csv('MoviesOnStreamingPlatforms_updated.csv', converters = {'Timestamp':str})
-imdbdf = pd.read_csv('IMDB-Movie-Data.csv', converters = {'Timestamp':str})
+tvdf = pd.read_csv('data/TV_shows_all_features.csv', converters = {'Timestamp':str})
+moviedf = pd.read_csv('data/MoviesOnStreamingPlatforms_updated.csv', converters = {'Timestamp':str})
+imdbdf = pd.read_csv('data/IMDB-Movie-Data.csv', converters = {'Timestamp':str})
 def red_func(word, font_size, position, orientation, random_state=None,
                     **kwargs):
     '''
