@@ -31,7 +31,7 @@ To generate a subset of the plots we used in our platform analysis, run the ECE1
 -Bar chart showing the number of movies on the 1000 most popular IMDB movies list each streaming platform contains <br>
 -Stacked bar charts showing the number of movies available in different languages on each streaming platform <br>
 
-Note: the ECE143Project.py script imports platform_plots.py, which includes the plotting functions which generate the pie charts, swarmplots, bar chart, and stacked bar charts.
+Note: the ECE143Project.py script imports platform_plots.py, which includes the plotting functions which generate the pie charts, swarmplots, bar chart, and stacked bar charts. <br>
 **Recommender System Code** <br>
 
 **Libraries:** <br>
