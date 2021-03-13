@@ -23,7 +23,7 @@ Most popular movies on IMDB over 10 year period (for list of most popular movies
 
 **Code:** <br>
 **Platform Analysis Code** <br>
-To generate a subset of the plots we used in our platform analysis, run the ECE143Project.py script.  It generates numerous plots, several of which were not included in our final presentation (for time purposes). The plots generated are listed below. 
+To generate a subset of the plots we used in our platform analysis, run the ECE143Project.py script.  It generates numerous plots, several of which were not included in our final presentation (for time purposes). The plots generated are listed below. <br>
 -Pie charts displaying the breakdown of age ratings of movies and tv shows on each platform <br>
 -Pie charts showing the genre breakdown of movies and tv shows on each platform <br>
 -Swarmplots showing the IMDB scores and age rating of movies and tv shows on each platform (each plotted point represents a movie on a certain streaming platform. Its y-value represents the IMDB score and its color represents the age rating) <br>
