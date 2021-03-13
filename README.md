@@ -4,7 +4,9 @@
 ### Team Members: Katrina Agate, Shivani Athavale, Laura Becerra, Jake Daly, Jinyu Zhao
 
 ---
-
+**Install Dependencies:**<br>
+To install the dependencies that we used for this project, run the following commands. <br>
+`pip install requirements.txt`
 
 **Problem:** <br>
 Comparing movies and tv shows available on different platforms. <br>
@@ -14,8 +16,6 @@ Movies on Netflix, Prime Video, Hulu, and Disney+ (production year, target age g
 (https://www.kaggle.com/ruchi798/movies-on-netflix-prime-video-hulu-and-disney) <br>
 TV shows on Netflix, Prime Video, Hulu, and Disney+ (production year, target age group, ratings, platform availability)  <br>
 (https://www.kaggle.com/ruchi798/tv-shows-on-netflix-prime-video-hulu-and-disney) <br>
-MovieLens 20M (for movie genre information): <br>
-(https://www.kaggle.com/grouplens/movielens-20m-dataset?select=tag.csv) <br>
 Most popular movies on IMDB over 10 year period (for list of most popular movies): <br>
 (https://www.kaggle.com/PromptCloudHQ/imdb-data) <br>
 TvMaze API (for TV shows actors, producers, language, genres) <br>
