@@ -30,9 +30,9 @@ To generate a subset of the plots we used in our platform analysis, run the ECE1
 -Swarmplots showing the Rotten Tomato scores and age rating of movies and tv shows on each platform (each plotted point represents a movie on a certain streaming platform. Its y-value represents the Rotton Tomato score and its color represents the age rating) <br>
 -Bar chart showing the number of movies on the 1000 most popular IMDB movies list each streaming platform contains <br>
 -Stacked bar charts showing the number of movies available in different languages on each streaming platform <br>
--Stacked bar charts showing the year wise distribution of number of movies across all platforms
--Stacked bar charts showing the year wise distribution of number of TV Shows across all platforms
--Wordclouds showing the description data
+-Stacked bar charts showing the year wise distribution of number of movies across all platforms<br>
+-Stacked bar charts showing the year wise distribution of number of TV Shows across all platforms<br>
+-Wordclouds showing the description data<br>
 
 **TV Show Data Extraction Code** <br>
 To extract additional TV show data, the functions in process_TVshows.py each extract a different TV show feature for each TV show in the original Kaggle dataset from an API called TvMaze. The last function in the py file consolidates all of these extracted features into one csv file. All functions take in the original Kaggle TV show dataset titled "tv_shows.csv" <br>
