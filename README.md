@@ -16,8 +16,6 @@ TV shows on Netflix, Prime Video, Hulu, and Disney+ (production year, target age
 (https://www.kaggle.com/ruchi798/tv-shows-on-netflix-prime-video-hulu-and-disney) <br>
 MovieLens 20M (for movie genre information): <br>
 (https://www.kaggle.com/grouplens/movielens-20m-dataset?select=tag.csv) <br>
-Prime TV shows (for tv shows genre information): <br>
-(https://www.kaggle.com/nilimajauhari/amazon-prime-tv-shows) <br>
 Most popular movies on IMDB over 10 year period (for list of most popular movies): <br>
 (https://www.kaggle.com/PromptCloudHQ/imdb-data) <br>
 TvMaze API (for TV shows actors, producers, language, genres) <br>
