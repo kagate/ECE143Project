@@ -9,11 +9,18 @@
     consolidated_TVshow_data outputs TV_shows_all_features.csv --> original tv_shows.csv with all new columns generated in above functions
 '''
 def add_TVshow_decade(file_name='tv_shows.csv'):
-    ''' Plot doughnut plot of tv show languages '''
+    ''' 
+    Plot doughnut plot of tv show languages 
+    
+    :param file_name: name of input csv file
+    :type file_name: str
+    '''
 
     import pandas as pd
     from pandas.api.types import CategoricalDtype
-
+    
+    assert isinstance(file_name,str)
+    
     TVshow_data = pd.read_csv(file_name,index_col=0,dtype={'Title': str, 'Year': int, 'Age': object, 'IMDb':float, 'Rotten Tomatoes':object, 'Netflix':bool, 'Hulu':bool, 'Prime Video':bool, 'Disney+':bool, 'type':bool})
 
     TVshow_data['Decade'] = ''                                          # make column for decade
@@ -25,9 +32,16 @@ def add_TVshow_decade(file_name='tv_shows.csv'):
     return TVshow_data
 
 def add_TVshow_actor(file_name='tv_shows.csv'):
-    ''' Add directors and actors columns to TVshow dataframe '''
+    ''' 
+    Add directors and actors columns to TVshow dataframe 
+    
+    :param file_name: name of input csv file
+    :type file_name: str
+    '''
     import pandas as pd
     from tvmaze.api import Api                                          # import TV show API with TV show attributes
+    
+    assert isinstance(file_name,str)
 
     TVshow_data = pd.read_csv(file_name,index_col=0,dtype={'Title': str, 'Year': int, 'Age': object, 'IMDb':float, 'Rotten Tomatoes':object, 'Netflix':bool, 'Hulu':bool, 'Prime Video':bool, 'Disney+':bool, 'type':bool})
     api = Api()
@@ -54,8 +68,17 @@ def add_TVshow_actor(file_name='tv_shows.csv'):
     return TVshow_data
 
 def add_TVshow_producer(file_name='tv_shows.csv'):
+    '''
+    This function extracts TV show producers from the TvMaze API
+    
+    :param file_name: name of input csv file
+    :type file_name: str
+    '''
+    
     import pandas as pd
     from tvmaze.api import Api # import TV show API with TV show attributes
+    
+    assert isinstance(file_name,str)
 
     TVshow_data = pd.read_csv(file_name,index_col=0,dtype={'Title': str, 'Year': int, 'Age': object, 'IMDb':float, 'Rotten Tomatoes':object, 'Netflix':bool, 'Hulu':bool, 'Prime Video':bool, 'Disney+':bool, 'type':bool})
     api = Api()
@@ -84,8 +107,17 @@ def add_TVshow_producer(file_name='tv_shows.csv'):
     return TVshow_data
 
 def add_TVshow_genre(file_name='tv_shows.csv'):
+    '''
+    This function extracts genres from the TvMaze API and adds it to the input csv file.
+    
+    :param file_name: name of input csv file
+    :type file_name: str
+    '''
+    
     import pandas as pd
     from tvmaze.api import Api
+    
+    assert isinstance(file_name,str)
 
     TVshow_data = pd.read_csv(file_name,index_col=0,dtype={'Title': str, 'Year': int, 'Age': object, 'IMDb':float, 'Rotten Tomatoes':object, 'Netflix':bool, 'Hulu':bool, 'Prime Video':bool, 'Disney+':bool, 'type':bool})
     api = Api()
@@ -107,8 +139,17 @@ def add_TVshow_genre(file_name='tv_shows.csv'):
     return TVshow_data
 
 def add_TVshow_language(file_name='tv_shows.csv'):
+    '''
+    This function extracts languages for TV shows from the TvMaze API and adds it to the data in the input csv file.
+    
+    :param file_name: name of input csv file
+    :type file_name: str
+    '''
+    
     import pandas as pd
     from tvmaze.api import Api
+    
+    assert isinstance(file_name,str)
 
     TVshow_data = pd.read_csv(file_name,index_col=0,dtype={'Title': str, 'Year': int, 'Age': object, 'IMDb':float, 'Rotten Tomatoes':object, 'Netflix':bool, 'Hulu':bool, 'Prime Video':bool, 'Disney+':bool, 'type':bool})
     api = Api()
@@ -130,7 +171,15 @@ def add_TVshow_language(file_name='tv_shows.csv'):
     return TVshow_data
 
 def consolidated_TVshow_data(file_name='tv_shows.csv'):
+    '''
+    This function takes the extracted data from the previous functions and consolidates them into 1 output csv file containing all of the TV shows in the input csv file.
+    
+    :param file_name: name of input csv file
+    :type file_name: str
+    '''
     import pandas as pd
+    
+    assert isinstance(file_name,str)
 
     # import all modified csv's from functions above
     TVshow_data = pd.read_csv(file_name,index_col=0,dtype={'Title': str, 'Year': int, 'Age': object, 'IMDb':float, 'Rotten Tomatoes':object, 'Netflix':bool, 'Hulu':bool, 'Prime Video':bool, 'Disney+':bool, 'type':bool})
@@ -161,6 +210,3 @@ def consolidated_TVshow_data(file_name='tv_shows.csv'):
 
     # save final dataframe to csv file
     TVshow_data.to_csv(r'TV_shows_all_features.csv',index=False)           
-
-if __name__ == '__main__':
-    print(consolidated_TVshow_data(file_name='tv_shows.csv'))
