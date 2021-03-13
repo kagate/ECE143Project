@@ -20,7 +20,7 @@ Prime TV shows (for tv shows genre information): <br>
 (https://www.kaggle.com/nilimajauhari/amazon-prime-tv-shows) <br>
 Most popular movies on IMDB over 10 year period (for list of most popular movies): <br>
 (https://www.kaggle.com/PromptCloudHQ/imdb-data) <br>
-TvMaze API (for TV shows actors, producers, language, genres)
+TvMaze API (for TV shows actors, producers, language, genres) <br>
 (https://github.com/yakupadakli/python-tvmaze) <br>
 
 **Code:** <br>
