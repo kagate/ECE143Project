@@ -33,6 +33,12 @@ To generate a subset of the plots we used in our platform analysis, run the ECE1
 
 **TV Show Data Extraction Code** <br>
 To extract additional TV show data, the functions in process_TVshows.py each extract a different TV show feature for each TV show in the original Kaggle dataset from an API called TvMaze. The last function in the py file consolidates all of these extracted features into one csv file. All functions take in the original Kaggle TV show dataset titled "tv_shows.csv" <br>
+-add_TVshow_decade outputs TV_shows_decade.csv --> original TV show csv with added decade column <br>
+-add_TVshow_actor outputs TV_shows_actors.csv --> original TV show csv with added actors column (each entry has list of actors) <br>
+-add_TVshow_producer outputs TV_shows_producers.csv --> original TV show csv with added producers column (each entry has list of executive producers) <br>
+-add_TVshow_genre outputs TV_shows_genres.csv --> original TV show csv with added genres column (each entry has list of genres) <br>
+-add_TVshow_language outputs TV_shows_languages.csv --> original TV show csv with added language column <br>
+-consolidated_TVshow_data outputs TV_shows_all_features.csv --> original tv_shows.csv with all new columns generated in above functions <br>
 
 
 Note: the ECE143Project.py script imports platform_plots.py, which includes the plotting functions which generate the pie charts, swarmplots, bar chart, and stacked bar charts. <br>
