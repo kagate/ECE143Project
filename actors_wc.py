@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import os
 from collections import OrderedDict
 import itertools
-
+from wordcloud import WordCloud
 def actors_wordcloud(df,platform):
   '''
   wordcloud for actors wise distribution of movies on platforms

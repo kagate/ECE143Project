@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import os
 from collections import OrderedDict
 import itertools
-
+from wordcloud import WordCloud
 def desc(df,platform):
   '''
   wordcloud for description of movies on platforms
