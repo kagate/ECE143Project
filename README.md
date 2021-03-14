@@ -48,6 +48,9 @@ To extract additional TV show data, the functions in process_TVshows.py each ext
 -consolidated_TVshow_data outputs TV_shows_all_features.csv --> original tv_shows.csv with all new columns generated in above functions <br>
 
 **Recommender System Code** <br>
+To generate the platform recommendation and peresonal portforlio, use the functioned called in the `FinalNotebook.ipynb`. <br>
+All the helper functions are stored in `recommender/recommender_system.py` including the TF-IDF statistics generation, recommendation algorithm and personal portforlio plot generation. <br>
+Note that the recommendation plot can not be seen in from the GitHub preview, it's due to the incompatibility of plotly. <br>
 
 **Third-Party Modules:** <br>
 The ECE143Project.py file requires the following libraries: numpy <br>
