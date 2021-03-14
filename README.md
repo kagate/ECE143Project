@@ -31,11 +31,12 @@ To generate a subset of the plots we used in our platform analysis, run the ECE1
 -Bar chart showing the number of movies on the 1000 most popular IMDB movies list each streaming platform contains <br>
 -Stacked bar charts showing the number of movies available in different languages on each streaming platform <br>
 Note: the ECE143Project.py script imports platform_plots.py, which includes the plotting functions which generate the pie charts, swarmplots, bar chart, and stacked bar charts. <br>
-**This part of the code is also used for platform analysis however runs two different files Stackedbarchart_year_plots.py and Wordcloud_description_plots.py to generate the plots**
-The outputs have been displayed in the FinalNotebook.ipynb jupyter notebook.
+This part of the code is also used for platform analysis however runs two different files Stackedbarchart_year_plots.py and Wordcloud_description_plots.py to generate the plots<br>
+The outputs have been displayed in the FinalNotebook.ipynb jupyter notebook.<br>
 -Stacked bar charts showing the year wise distribution of number of movies across all platforms<br>
 -Stacked bar charts showing the year wise distribution of number of TV Shows across all platforms<br>
 -Wordclouds showing the description data<br>
+-Uses the data files TV_shows_all_features.csv, MoviesOnStreamingPlatforms_updated.csv, IMDB-Movie-Data.csv from the data folder.
 
 **TV Show Data Extraction Code** <br>
 To extract additional TV show data, the functions in process_TVshows.py each extract a different TV show feature for each TV show in the original Kaggle dataset from an API called TvMaze. The last function in the py file consolidates all of these extracted features into one csv file. All functions take in the original Kaggle TV show dataset titled "tv_shows.csv" <br>
