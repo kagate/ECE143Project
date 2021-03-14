@@ -30,6 +30,8 @@ To generate a subset of the plots we used in our platform analysis, run the ECE1
 -Swarmplots showing the Rotten Tomato scores and age rating of movies and tv shows on each platform (each plotted point represents a movie on a certain streaming platform. Its y-value represents the Rotton Tomato score and its color represents the age rating) <br>
 -Bar chart showing the number of movies on the 1000 most popular IMDB movies list each streaming platform contains <br>
 -Stacked bar charts showing the number of movies available in different languages on each streaming platform <br>
+Note: the ECE143Project.py script imports platform_plots.py, which includes the plotting functions which generate the pie charts, swarmplots, bar chart, and stacked bar charts. <br>
+**Shivani's code description here** <br>
 -Stacked bar charts showing the year wise distribution of number of movies across all platforms<br>
 -Stacked bar charts showing the year wise distribution of number of TV Shows across all platforms<br>
 -Wordclouds showing the description data<br>
@@ -43,11 +45,9 @@ To extract additional TV show data, the functions in process_TVshows.py each ext
 -add_TVshow_language outputs TV_shows_languages.csv --> original TV show csv with added language column <br>
 -consolidated_TVshow_data outputs TV_shows_all_features.csv --> original tv_shows.csv with all new columns generated in above functions <br>
 
-
-Note: the ECE143Project.py script imports platform_plots.py, which includes the plotting functions which generate the pie charts, swarmplots, bar chart, and stacked bar charts. <br>
 **Recommender System Code** <br>
 
-**Libraries:** <br>
-The ECE143Project.py file requires the following libraries: csv, numpy, collections, platform_plots <br>
+**Third-Party Modules:** <br>
+The ECE143Project.py file requires the following libraries: numpy <br>
 The platform_plots file requires the following libraries: pandas, seaborn, matplotlib, numpy <br>
 The process_TVshows.py file requires the following: pandas, tvmaze.api which can be pulled from PyPI (pip install python-tvmaze) <br>   
