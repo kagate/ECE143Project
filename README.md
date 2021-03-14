@@ -70,12 +70,12 @@ To extract additional TV show data, the functions in process_TVshows.py each ext
 The ECE143Project.py file requires the following libraries: numpy <br>
 The platform_plots file requires the following libraries: pandas, seaborn, matplotlib, numpy <br>
 The process_TVshows.py file requires the following: pandas, tvmaze.api which can be pulled from PyPI (pip install python-tvmaze) <br>   
-The Stackedbarchart_year_plots.py file requires the following libraries: numpy, csv, collections, pandas, matplotlib, wordcloud, itertools, random
-The producer_tv.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud, random
-The Wordcloud_description_plots.py file requires the following libraries: csv, numpy, collections, pandas, matplotlib, wordcloud, itertools, random
-The actors_wc_tv.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud
-The director_wc.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud
-The actors_wc.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud
-The desc.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud
+The Stackedbarchart_year_plots.py file requires the following libraries: numpy, csv, collections, pandas, matplotlib, wordcloud, itertools, random<br>
+The producer_tv.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud, random<br>
+The Wordcloud_description_plots.py file requires the following libraries: csv, numpy, collections, pandas, matplotlib, wordcloud, itertools, random<br>
+The actors_wc_tv.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud<br>
+The director_wc.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud<br>
+The actors_wc.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud<br>
+The desc.py file requires the following libraries: xlrd, pandas, numpy, matplotlib, os, collections, itertools, wordcloud<br>
 
 
