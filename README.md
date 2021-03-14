@@ -22,6 +22,7 @@ TvMaze API (for TV shows actors, producers, language, genres) <br>
 (https://github.com/yakupadakli/python-tvmaze) <br>
 
 **Code:** <br>
+All figures that were shown in the presentation are in `FinalNotebook.ipynb` <br>
 **Platform Analysis Code** <br>
 To generate a subset of the plots we used in our platform analysis, run the ECE143Project.py script.  It generates numerous plots, several of which were not included in our final presentation (for time purposes). The plots generated are listed below. <br>
 -Pie charts displaying the breakdown of age ratings of movies and tv shows on each platform <br>
